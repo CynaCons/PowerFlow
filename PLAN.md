@@ -18,7 +18,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 ## v0.1 — Definition
 > Handbook, decisions, templates and the core skills.
 
-### v0.1.0 — Project initiation (current) (ACTIVE)
+### v0.1.0 — Project initiation (2026-09-18) (COMPLETE)
 **Goal:** Repo scaffold, PRD, this plan under powerplan, decisions D1–D11 recorded, handbook first draft, the 2026-09-18 proposal archived, show_miniplan defined in powerplan.
 - [x] Write PRD.md (problem, users, principles, contents, skill surface, distribution, non-goals, success criteria, decisions to record) [agent: claude-opus-5]
 - [x] Create PLAN.md through powerplan (this file); register powerplan in .mcp.json + .claude/settings.local.json [agent: claude-opus-5]
@@ -27,10 +27,10 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] AGENTS.md + CLAUDE.md shim + README.md for PowerFlow itself [agent: claude-opus-5]
 - [x] Archive the 2026-09-18 proposal page under docs/ [agent: claude-opus-5]
 - [x] Define show_miniplan in powerplan: PRD §5 row + v0.8.0 iteration in powerplan/PLAN.md (implementation tracked there) [agent: claude-opus-5]
-- [ ] git init, .gitignore, first commit
+- [x] git init, .gitignore, first commit [agent: claude-opus-5]
 - [x] Smoke test: powerplan check_plan green; every decision file linked from docs/decisions/README.md; every skill named in PRD.md has a catalog row [agent: claude-opus-5]
 
-### v0.1.1 — Templates + powerflow-init
+### v0.1.1 — Templates + powerflow-init (current) (ACTIVE)
 **Goal:** Every project artifact as a template with the D1–D11 decisions baked in, and the skill that stamps them into a new repo.
 - [ ] templates/PRD.md, PLAN.md (header per D2), AGENTS.md, CLAUDE.md shim, README.md
 - [ ] templates/docs/srs/README.md (index + prefix allocator, columns per D1) + SRS-template.md
