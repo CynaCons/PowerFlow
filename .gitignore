@@ -1,0 +1,9 @@
+# PowerFlow
+__pycache__/
+*.pyc
+node_modules/
+.claude/settings.local.json
+.claude/worktrees/
+IAC.md
+.powerspawn/
+*.log

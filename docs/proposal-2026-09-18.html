@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Archived copy of the 2026-09-18 PowerFlow proposal (https://claude.ai/artifact/7yJrLes36qft97YjQaJKLa). Skill names updated to powerflow-* (D5). -->
+<title>PowerFlow Proposal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F3F5F7; --surface:#FFFFFF; --surface-2:#E9EDF1; --line:#D5DCE3; --line-strong:#B9C3CD;
+  --ink:#172033; --ink-2:#3C4A5C; --muted:#66758A;
+  --accent:#0F766E; --accent-ink:#FFFFFF; --accent-soft:#D9F0EC;
+  --gate:#B45309; --gate-soft:#FCE9D2;
+  --done:#2F7D4F; --done-soft:#DDF0E3;
+  --warn:#9A3412; --warn-soft:#FBE3D7;
+  --code-bg:#EEF2F5;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F141A; --surface:#161D26; --surface-2:#1E2731; --line:#2A3542; --line-strong:#3A4757;
+    --ink:#E6EBF0; --ink-2:#C2CBD6; --muted:#93A1B3;
+    --accent:#2DD4BF; --accent-ink:#06201D; --accent-soft:#12312E;
+    --gate:#F4B26B; --gate-soft:#3A2A14;
+    --done:#7BD39A; --done-soft:#17301F;
+    --warn:#F49A76; --warn-soft:#3B2016;
+    --code-bg:#1B242E;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F141A; --surface:#161D26; --surface-2:#1E2731; --line:#2A3542; --line-strong:#3A4757;
+  --ink:#E6EBF0; --ink-2:#C2CBD6; --muted:#93A1B3;
+  --accent:#2DD4BF; --accent-ink:#06201D; --accent-soft:#12312E;
+  --gate:#F4B26B; --gate-soft:#3A2A14;
+  --done:#7BD39A; --done-soft:#17301F;
+  --warn:#F49A76; --warn-soft:#3B2016;
+  --code-bg:#1B242E;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:0 64px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,4.5vw,3rem);letter-spacing:-.01em}
+h2{font-size:1.75rem;margin-top:3.25rem;margin-bottom:1rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+h3{font-size:1.2rem;margin-top:2rem;margin-bottom:.5rem}
+h4{font-family:var(--sans);font-weight:600;font-size:.95rem;margin-top:1.25rem;margin-bottom:.25rem}
+p{margin:.6rem 0}
+.wrap{max-width:1120px;margin:0 auto}
+.doc{display:grid;grid-template-columns:minmax(0,1fr);gap:0 48px}
+@media (min-width:1000px){.doc{grid-template-columns:200px minmax(0,1fr)}}
+.toc{display:none}
+@media (min-width:1000px){
+  .toc{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:.85rem;line-height:1.4;padding-top:2.75rem}
+  .toc ol{list-style:none;padding:0;margin:0;border-left:1px solid var(--line)}
+  .toc li a{display:block;padding:.3rem 0 .3rem .85rem;color:var(--muted);border:0;margin-left:-1px;border-left:2px solid transparent}
+  .toc li a:hover{color:var(--ink)}
+  .toc .num{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-right:.4rem}
+}
+.main{min-width:0}
+.prose{max-width:72ch}
+.lead{font-size:1.15rem;color:var(--ink-2);max-width:62ch}
+.kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header.masthead{padding-top:2.75rem;padding-bottom:2rem;border-bottom:1px solid var(--line)}
+.meta{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-top:1.25rem;font-size:.85rem;color:var(--muted)}
+.meta b{color:var(--ink-2);font-weight:500}
+code,kbd{font-family:var(--mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:3px}
+pre{font-family:var(--mono);font-size:.82rem;line-height:1.5;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:1rem 1.1rem;overflow-x:auto;margin:1rem 0}
+pre code{background:none;padding:0;font-size:inherit}
+.figure{margin:1.5rem 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:1rem}
+.figure figcaption{font-size:.85rem;color:var(--muted);margin-top:.75rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;vertical-align:top;padding:.55rem .7rem;border-bottom:1px solid var(--line)}
+th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+td.c{text-align:center;font-family:var(--mono);font-size:.8rem}
+tbody tr:last-child td{border-bottom:0}
+.matrix td:first-child{font-weight:500;white-space:nowrap}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.1rem .45rem;border-radius:999px;border:1px solid var(--line-strong);color:var(--ink-2);white-space:nowrap}
+.tag.acc{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.tag.gate{background:var(--gate-soft);border-color:transparent;color:var(--gate)}
+.tag.done{background:var(--done-soft);border-color:transparent;color:var(--done)}
+.tag.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.25rem 0}
+.p{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem}
+.p h4{margin-top:0;font-family:var(--serif);font-size:1.05rem;font-weight:600}
+.p p{font-size:.92rem;color:var(--ink-2);margin:.4rem 0}
+.p .src{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:.6rem;line-height:1.5}
+.callout{border-left:3px solid var(--accent);background:var(--surface);padding:.85rem 1.1rem;border-radius:0 6px 6px 0;margin:1.25rem 0}
+.callout.gate{border-left-color:var(--gate)}
+.callout p{margin:.35rem 0}
+.tree{font-family:var(--mono);font-size:.8rem;line-height:1.55}
+.tree .cm{color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem}
+.q h4{margin-top:0;font-size:.95rem}
+.q p{font-size:.9rem;color:var(--ink-2);margin:.35rem 0}
+.q .rec{font-size:.88rem;margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--line)}
+.q .rec b{color:var(--accent)}
+ol.iter{padding-left:1.2rem}
+ol.iter li{margin:.45rem 0}
+ol.iter li b{font-family:var(--mono);font-weight:500;font-size:.9em;color:var(--accent)}
+ul.tight li{margin:.25rem 0}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:var(--sans)}
+.diagram .mono{font-family:var(--mono)}
+footer{margin-top:3.5rem;padding-top:1.25rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){a{transition:border-color .15s}}
+</style>
+
+<div class="wrap">
+<div class="doc">
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#s1"><span class="num">1</span>What I looked at</a></li>
+    <li><a href="#s2"><span class="num">2</span>The flow you practice</a></li>
+    <li><a href="#s3"><span class="num">3</span>The principles</a></li>
+    <li><a href="#s4"><span class="num">4</span>Where it drifted</a></li>
+    <li><a href="#s5"><span class="num">5</span>Proposal: PowerFlow</a></li>
+    <li><a href="#s6"><span class="num">6</span>Skill catalog</a></li>
+    <li><a href="#s7"><span class="num">7</span>Decisions to settle</a></li>
+    <li><a href="#s8"><span class="num">8</span>First iterations</a></li>
+  </ol>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <div class="kicker">Proposal · C:\dev\public-repo\PowerFlow</div>
+  <h1 style="margin-top:.5rem">PowerFlow</h1>
+  <p class="lead">Your agentic development methodology — PRD → SRS → PLAN → agents → close the loop → release — as it is actually practiced across eleven repositories, and a proposal to codify it once as a handbook, a template set, and a portable skill pack.</p>
+  <div class="meta">
+    <span><b>Date</b> 2026-09-18</span>
+    <span><b>Corpus</b> 11 repos, ~130 SRS files, 8 PLAN.md variants, 6 AGENTS.md, 4 project skills</span>
+    <span><b>Status</b> awaiting your decisions in §7</span>
+  </div>
+</header>
+
+<!-- ================================================================ -->
+<section id="s1" class="prose">
+<h2>1. What I looked at</h2>
+<p>Every methodology artifact at the root and under <code>docs/</code>, <code>spec/</code> and <code>.claude/</code> of the sibling repos in <code>C:\dev\public-repo</code> and <code>C:\dev\private-repo</code>, plus <code>training-ai-software-engineering-101</code> where you articulate the method in your own words (deck Part F, <code>docs/CONTENT_OUTLINE.md</code>). One thing I could not find: <b>autosar-101-training</b> is not on this machine (only <code>C:\dev\LIDAR\Config\AUTOSAR</code> exists). If it lives elsewhere, point me at it and I will fold it in.</p>
+</section>
+
+<figure class="figure scroll">
+<table class="matrix">
+<thead><tr><th>Repo</th><th>PRD</th><th>PLAN</th><th>AGENTS / CLAUDE</th><th>SRS scheme</th><th>Decisions</th><th>Memories</th><th>Skills</th><th>powerplan</th><th>powerspawn</th><th>Release ritual</th></tr></thead>
+<tbody>
+<tr><td>PowerGit <span class="tag acc">newest</span></td><td class="c">✓</td><td class="c">✓ 290 KB</td><td>AGENTS + shim</td><td><code>docs/srs/SRS-NAV-001</code></td><td><code>docs/design/</code></td><td><code>docs/agents/</code> 55 files</td><td><code>release</code></td><td class="c">✓</td><td class="c">✓</td><td>skill + CI guards</td></tr>
+<tr><td>RadEAU</td><td class="c">✓ §9</td><td class="c">✓</td><td>—</td><td><code>docs/SRS_x.md</code> · <code>VU-001</code> + ID registry</td><td><code>D1–D9</code></td><td>—</td><td>—</td><td class="c">✓</td><td class="c">✓</td><td>PRD §9.4 + release.yml</td></tr>
+<tr><td>powerplanner</td><td class="c">✓</td><td class="c">✓ 100 KB</td><td>AGENTS 19 KB + shim</td><td><code>spec/srs/SRS-ELEM-010</code> (web/native layers)</td><td>—</td><td><code>docs/*.md</code></td><td>powerplan · visual-plan · onslide-coordinator</td><td class="c">✓</td><td class="c">✓</td><td>—</td></tr>
+<tr><td>powertimelines</td><td class="c">✓</td><td class="c">✓ 79 KB</td><td>AGENTS + full CLAUDE (coordinator part)</td><td><code>docs/SRS_X.md</code> · <code>CC-REQ-ZOOM-001</code> + dashboard</td><td>—</td><td>—</td><td>—</td><td class="c">—</td><td class="c">✓</td><td>—</td></tr>
+<tr><td>powerplan</td><td class="c">✓</td><td class="c">✓ dogfood</td><td>—</td><td>—</td><td>—</td><td>—</td><td><code>release-powerplan</code></td><td class="c">itself</td><td class="c">—</td><td>RELEASING.md + skill</td></tr>
+<tr><td>powerspawn</td><td>DESIGN.md</td><td class="c">✓</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="c">submodule</td><td class="c">itself</td><td>—</td></tr>
+<tr><td>ARXMLExplorer</td><td class="c">✓</td><td class="c">✓</td><td>AGENTS + short CLAUDE + RULES</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="c">✓</td><td class="c">✓</td><td>—</td></tr>
+<tr><td>OpenT A2L-Forge</td><td class="c">✓</td><td class="c">✓</td><td>AGENTS ≈ CLAUDE (duplicated)</td><td><code>docs/srs/SRS-R21</code></td><td>—</td><td>—</td><td>—</td><td class="c">✓</td><td class="c">—</td><td>—</td></tr>
+<tr><td>PowerNote</td><td>—</td><td class="c">✓</td><td>AGENTS + CLAUDE</td><td><code>docs/SRS_X.md</code> · <code>REQ-TEXT-001</code></td><td>—</td><td>—</td><td>—</td><td class="c">submodule</td><td class="c">✓</td><td>showcase artifact</td></tr>
+<tr><td>powerforge</td><td class="c">✓ + VISION</td><td class="c">✓</td><td>AGENTS + GEMINI</td><td><code>docs/SRS_X.md</code></td><td>—</td><td>—</td><td>—</td><td class="c">—</td><td class="c">✓</td><td>—</td></tr>
+<tr><td>training-101</td><td>—</td><td class="c">✓ feedback rounds</td><td>AGENTS + shim</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="c">—</td><td class="c">—</td><td>Pages on push</td></tr>
+</tbody>
+</table>
+<figcaption>Artifact matrix. The pattern is stable — PRD + PLAN + AGENTS + SRS + MCP pair — but each repo re-decided the details. PowerGit (Sep 2026) is the most complete instance and the best baseline.</figcaption>
+</figure>
+
+<!-- ================================================================ -->
+<section id="s2" class="prose">
+<h2>2. The flow you practice</h2>
+<p>Stripped of project specifics, every repo runs the same loop. The PRD sets intent and methodology constraints; decisions are recorded before the subsystem exists; each feature gets an SRS table with stable IDs; PLAN.md carries versioned iterations operated by a single writer; each iteration walks the four movements (RadEAU PRD §9.1) and ends on a smoke test; owner reports and new ideas re-enter as tasks, never as prose. Agents split into a coordinator that owns the documents and workers that own code and memories.</p>
+</section>
+
+<figure class="figure diagram">
+<svg viewBox="0 0 1040 470" role="img" aria-label="The PowerFlow loop: PRD, decisions, SRS, PLAN, then an iteration cycle of plan/docs, implement, verify, release, with agent and tool lanes beneath">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--line-strong)"/></marker>
+    <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+  </defs>
+  <!-- lane labels -->
+  <text x="20" y="34" class="mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">DOCUMENTS · WHAT AND WHY</text>
+  <text x="20" y="190" class="mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">EACH ITERATION · FOUR MOVEMENTS</text>
+  <text x="20" y="346" class="mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">AGENTS AND TOOLS · WHO AND HOW</text>
+  <line x1="20" y1="168" x2="1020" y2="168" stroke="var(--line)"/>
+  <line x1="20" y1="324" x2="1020" y2="324" stroke="var(--line)"/>
+
+  <!-- row 1: documents -->
+  <g font-size="13" fill="var(--ink)">
+    <rect x="20" y="52" width="200" height="88" rx="6" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+    <text x="34" y="76" font-weight="600">PRD.md</text>
+    <text x="34" y="96" font-size="12" fill="var(--ink-2)">problem · users · principles</text>
+    <text x="34" y="113" font-size="12" fill="var(--ink-2)">stack · quality bar · §methodology</text>
+    <text x="34" y="130" font-size="12" fill="var(--ink-2)">iterated with the agent</text>
+
+    <rect x="260" y="52" width="200" height="88" rx="6" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+    <text x="274" y="76" font-weight="600">docs/decisions/D-n</text>
+    <text x="274" y="96" font-size="12" fill="var(--ink-2)">context · decision · consequences</text>
+    <text x="274" y="113" font-size="12" fill="var(--ink-2)">written before the subsystem</text>
+    <text x="274" y="130" font-size="12" fill="var(--ink-2)">enumerated in PRD §11</text>
+
+    <rect x="500" y="52" width="230" height="88" rx="6" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+    <text x="514" y="76" font-weight="600">docs/srs/SRS-&lt;feature&gt;.md</text>
+    <text x="514" y="96" font-size="12" fill="var(--ink-2)">one shall per row · stable IDs</text>
+    <text x="514" y="113" font-size="12" fill="var(--ink-2)">never reused · index allocates</text>
+    <text x="514" y="130" font-size="12" fill="var(--ink-2)">updated in the same change as code</text>
+
+    <rect x="770" y="52" width="250" height="88" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="784" y="76" font-weight="600">PLAN.md</text>
+    <text x="784" y="96" font-size="12" fill="var(--ink-2)">## vX.Y major · ### vX.Y.Z iteration</text>
+    <text x="784" y="113" font-size="12" fill="var(--ink-2)">**Goal:** · checkboxes only · Backlog last</text>
+    <text x="784" y="130" font-size="12" fill="var(--ink-2)">one active · append-only · single writer</text>
+
+    <line x1="220" y1="96" x2="258" y2="96" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+    <line x1="460" y1="96" x2="498" y2="96" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+    <line x1="730" y1="96" x2="768" y2="96" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- row 2: iteration cycle -->
+  <g font-size="13" fill="var(--ink)">
+    <rect x="20" y="208" width="190" height="84" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="34" y="232" font-weight="600">1 · Plan / docs</text>
+    <text x="34" y="252" font-size="12" fill="var(--ink-2)">Plan mode brief → tasks</text>
+    <text x="34" y="269" font-size="12" fill="var(--ink-2)">SRS rows + IDs before code</text>
+
+    <rect x="250" y="208" width="190" height="84" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="264" y="232" font-weight="600">2 · Implement</text>
+    <text x="264" y="252" font-size="12" fill="var(--ink-2)">workers, scoped diffs</text>
+    <text x="264" y="269" font-size="12" fill="var(--ink-2)">data-testid · pure modules</text>
+
+    <rect x="480" y="208" width="230" height="84" rx="6" fill="var(--gate-soft)" stroke="var(--gate)"/>
+    <text x="494" y="232" font-weight="600">3 · Verify — close the loop</text>
+    <text x="494" y="252" font-size="12" fill="var(--ink-2)">e2e once on the real binary · smoke</text>
+    <text x="494" y="269" font-size="12" fill="var(--ink-2)">evidence in the report · owner tick</text>
+
+    <rect x="750" y="208" width="270" height="84" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="764" y="232" font-weight="600">4 · Release</text>
+    <text x="764" y="252" font-size="12" fill="var(--ink-2)">close iteration first · one version source</text>
+    <text x="764" y="269" font-size="12" fill="var(--ink-2)">tag → CI artifacts · notes from PLAN</text>
+
+    <line x1="210" y1="250" x2="248" y2="250" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+    <line x1="440" y1="250" x2="478" y2="250" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+    <line x1="710" y1="250" x2="748" y2="250" stroke="var(--line-strong)" marker-end="url(#arr)"/>
+
+    <!-- loop back from release to plan, and PLAN drives iteration -->
+    <path d="M885 292 L885 310 L115 310 L115 294" fill="none" stroke="var(--accent)" stroke-dasharray="4 4" marker-end="url(#arrA)"/>
+    <text x="500" y="306" text-anchor="middle" font-size="11" fill="var(--accent)" class="mono">next iteration · new idea → new task · owner report → failing test first</text>
+    <path d="M895 140 L895 160 L115 160 L115 206" fill="none" stroke="var(--accent)" marker-end="url(#arrA)"/>
+  </g>
+
+  <!-- row 3: agents and tools -->
+  <g font-size="13" fill="var(--ink)">
+    <rect x="20" y="364" width="235" height="86" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="34" y="388" font-weight="600">Coordinator</text>
+    <text x="34" y="407" font-size="12" fill="var(--ink-2)">owns PRD · PLAN · SRS · AGENTS</text>
+    <text x="34" y="424" font-size="12" fill="var(--ink-2)">dispatches · verifies · never trusts</text>
+    <text x="34" y="441" font-size="12" fill="var(--ink-2)">the worker's word</text>
+
+    <rect x="275" y="364" width="235" height="86" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="289" y="388" font-weight="600">Workers</text>
+    <text x="289" y="407" font-size="12" fill="var(--ink-2)">product code, scoped to the task</text>
+    <text x="289" y="424" font-size="12" fill="var(--ink-2)">write docs/agents/memories</text>
+    <text x="289" y="441" font-size="12" fill="var(--ink-2)">never commit · never edit plan/spec</text>
+
+    <rect x="530" y="364" width="235" height="86" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="544" y="388" font-weight="600" class="mono">powerplan · powerspawn</text>
+    <text x="544" y="407" font-size="12" fill="var(--ink-2)">single writer of PLAN.md</text>
+    <text x="544" y="424" font-size="12" fill="var(--ink-2)">cross-model spawn · IAC.md trail</text>
+    <text x="544" y="441" font-size="12" fill="var(--ink-2)">deterministic where possible</text>
+
+    <rect x="785" y="364" width="235" height="86" rx="6" fill="var(--surface)" stroke="var(--line-strong)"/>
+    <text x="799" y="388" font-weight="600">CI guards</text>
+    <text x="799" y="407" font-size="12" fill="var(--ink-2)">duplicate req-IDs · plan structure</text>
+    <text x="799" y="424" font-size="12" fill="var(--ink-2)">version derivation · unused deps</text>
+    <text x="799" y="441" font-size="12" fill="var(--ink-2)">red CI is the gate, not "it works"</text>
+  </g>
+</svg>
+<figcaption>The PowerFlow loop as reconstructed from RadEAU PRD §9, PowerGit AGENTS.md, powerplan PRD, powertimelines CLAUDE.md Part 2 and the training deck Part F. Nothing here is invented — every box maps to a file convention you already use.</figcaption>
+</figure>
+
+<!-- ================================================================ -->
+<section id="s3">
+<div class="prose">
+<h2>3. The principles, with their sources</h2>
+<p>These are the rules that recur across repos, stated once. Each card names where I found it so you can check my reading. They become the body of the handbook (§5).</p>
+</div>
+
+<div class="principles">
+<div class="p"><h4>Plan before code; PRD first</h4><p>Start from the idea, iterate the PRD with the agent until it can guide the rest. The PRD ends with a methodology section and a table of decisions to record.</p><div class="src">RadEAU PRD §9, §11 · training deck F1 · PowerGit PRD §9 "Documents"</div></div>
+<div class="p"><h4>PLAN.md is the operational backbone</h4><p>Versioned majors and iterations, a <code>**Goal:**</code> line, checkbox tasks only, Backlog pinned last, exactly one active iteration, append-only, never cleared. Every iteration's last task is a smoke test.</p><div class="src">powerplan PRD §4 · RadEAU PLAN.md · PowerNote PLAN.md · powertimelines "Format Rules"</div></div>
+<div class="p"><h4>Single writer, evidence or it didn't happen</h4><p>powerplan is the only sanctioned writer of PLAN.md; a task is ticked with proof (test output, commit, artifact) — a process rule, not a tool parameter. Build passing ≠ feature working.</p><div class="src">powerplan PRD §3 · PowerGit AGENTS "Engineering rules" · powertimelines CLAUDE.md §6</div></div>
+<div class="p"><h4>A header that cannot go stale</h4><p>"The current iteration is the last heading not marked COMPLETE." No version number in the header, no Recent-Achievements list to maintain.</p><div class="src">PowerGit PLAN.md "Current Status" — versus powertimelines' 110-line achievements list that drifted</div></div>
+<div class="p"><h4>One SRS per feature area, ASPICE-style</h4><p>A table opens the file: ID · Requirement (one shall) · Rationale · Verification (Test/Analysis/Review/Demo) · Trace. IDs are stable forever and never reused; a single index allocates prefixes; CI fails on duplicates. A named feature does not ship without an SRS file.</p><div class="src">PowerGit docs/srs/README.md · powerplanner spec/srs/README.md · RadEAU REQUIREMENT_IDS.md + check-req-ids.mjs</div></div>
+<div class="p"><h4>Spec updates land with the code</h4><p>PLAN.md and the relevant SRS are updated in the same change as the implementation. New feature → SRS rows + IDs + a PLAN task <em>before</em> implementation begins.</p><div class="src">RadEAU PRD §9.2, §9.5 · powerplanner AGENTS "Native SRS + E2E discipline" · PowerNote CLAUDE "Critical Workflow"</div></div>
+<div class="p"><h4>Decisions are written before the subsystem</h4><p>One ADR per decision (Context / Decision / Consequences), enumerated in the PRD with a default recommendation, each carrying the gate that would reopen it.</p><div class="src">RadEAU docs/decisions/D1–D9 · PRD §11</div></div>
+<div class="p"><h4>AGENTS.md is the source; CLAUDE.md is a shim</h4><p>One shared briefing for every harness (Codex, Copilot, Claude, Cursor). CLAUDE.md points at it. Project shape, commands, how we verify, who owns which files, engineering rules, reporting format.</p><div class="src">PowerGit · powerplanner · ARXMLExplorer · training-101 (all converged on the shim)</div></div>
+<div class="p"><h4>Coordinator / worker split with an ownership table</h4><p>Coordinator owns PLAN, PRD, SRS, AGENTS and commits. Workers own product code scoped to the task, may write memories, must not commit or edit planning files. Dispatch prompts carry goal, context, constraints, definition of done, report-back format.</p><div class="src">PowerGit AGENTS "Who owns which files" · powertimelines CLAUDE.md Part 2 · onslide-coordinator "dispatch contract"</div></div>
+<div class="p"><h4>Recursive improvement via memories</h4><p><code>docs/agents/memories/&lt;topic&gt;.md</code>: one fact per heading, dated if it might rot, corrected in place. <code>context/&lt;feature&gt;.md</code> is a worker briefing deleted once absorbed. No task status, no secrets, no SRS copies.</p><div class="src">PowerGit docs/agents/README.md (55 memories) · powerplanner AGENTS "Memory Files"</div></div>
+<div class="p"><h4>Close the loop — by architecture</h4><p>The agent must be able to see its own work: real binary over CDP, <code>data-testid</code> on every interactive element, no mocks, numbered E2E scripts, raw sleeps banned, stable test hooks treated as public API. Observability is a requirement, not an afterthought.</p><div class="src">training deck F5 · RadEAU PRD §9.3 · A2L-Forge "NO MOCKS" · PowerGit "How we verify"</div></div>
+<div class="p"><h4>Verify once; screenshots are opt-in</h4><p>Run e2e once; if red, read the first error, fix, run once. Chrome MCP screenshots re-enter the context and dominated a session's token budget. Pixel diffs only when the owner asks.</p><div class="src">PowerGit docs/agents/memories/verify-loop.md · AGENTS "How we verify (token budget)"</div></div>
+<div class="p"><h4>Owner reports are symptom-first and owner-closed</h4><p>The first commit is a failing test quoting the owner's sentence verbatim, on the reported platform, asserting what the owner sees. An agent never ticks an owner-report task — it writes "fixed &lt;sha&gt;, awaiting owner verification" and leaves the box open.</p><div class="src">PowerGit AGENTS "Engineering rules" (v0.12.1→v0.13.13 lesson) · training deck F5 "Bugs → failing tests first"</div></div>
+<div class="p"><h4>Release is a ritual, not a push</h4><p>Close the iteration first (PLAN is the changelog source). One version source, everything derives; lockstep check script; canonical build only; tag → CI builds artifacts; smoke the packaged artifact; storefront check; then tick the release in PLAN.</p><div class="src">PowerGit .claude/skills/release · RadEAU PRD §9.4 · powerplan docs/RELEASING.md</div></div>
+<div class="p"><h4>Determinism over instructions</h4><p>"Everything that can be done deterministically should be." Programs hold the PMT (process, methods, tools): powerplan writes the plan, powerspawn logs IAC.md, CI scripts guard IDs, plan structure and version derivation. Agents reason; they do not bookkeep.</p><div class="src">powerspawn DESIGN.md §2.1 · PowerGit ci.yml "static guards (version, plan)"</div></div>
+<div class="p"><h4>Commits name the movement</h4><p><code>feat(scope)</code>, <code>fix</code>, <code>perf</code>, <code>docs(spec)</code>, <code>plan: close vX.Y.Z</code>, <code>release: vX.Y.Z</code>. Plan mutations get their own commits; the version rides in the scope.</p><div class="src">RadEAU · PowerGit · powerplan git logs</div></div>
+</div>
+</section>
+
+<!-- ================================================================ -->
+<section id="s4">
+<div class="prose">
+<h2>4. Where the practice drifted</h2>
+<p>The method is stable; the encodings are not. Each of these was re-decided per project, which is exactly the cost PowerFlow should remove. Left column is what exists; right column is what I recommend the pack settles (you decide in §7).</p>
+</div>
+<figure class="figure scroll">
+<table>
+<thead><tr><th>Concern</th><th>Variants in the wild</th><th>Recommended canon</th></tr></thead>
+<tbody>
+<tr><td>Requirement ID</td><td><code>SRS-NAV-001</code> (PowerGit, powerplanner) · <code>VU-001</code> + registry (RadEAU) · <code>CC-REQ-ZOOM-001</code> (powertimelines) · <code>REQ-TEXT-001</code> (PowerNote) · <code>R1…R21</code> per document (A2L-Forge)</td><td><code>SRS-&lt;FEAT&gt;-NNN</code> — self-describing without a registry lookup, already in the two most recent repos</td></tr>
+<tr><td>SRS location and name</td><td><code>docs/SRS_Feature.md</code> · <code>docs/srs/SRS-feature.md</code> · <code>spec/srs/</code> + <code>spec/srs-native/</code></td><td><code>docs/srs/SRS-&lt;feature&gt;.md</code> with <code>docs/srs/README.md</code> as index and prefix allocator; layered <code>srs-&lt;platform&gt;/</code> only for dual-implementation products</td></tr>
+<tr><td>SRS table columns</td><td>ID·Req·Rationale·Verification·Trace · ID·Req·Status·Test · ID·Req·Acceptance·Code·Tests · ID·Req·Priority·Status·Acceptance</td><td>ID · Requirement · Rationale · Verification · Trace. Status lives in Trace (test path present = verified); priority lives in PLAN.md</td></tr>
+<tr><td>PLAN.md header</td><td>Goal/Philosophy/Stack (powerplan, RadEAU, PowerNote) · Quick Summary + Key Metrics + 110-line achievements (powertimelines, powerplanner) · Current Status invariant (PowerGit)</td><td>Goal · Philosophy · Verify · Stack, then PowerGit's stale-proof Current Status paragraph. No achievement lists</td></tr>
+<tr><td>CLAUDE.md</td><td>Shim → AGENTS.md (4 repos) · full duplicate (A2L-Forge) · full coordinator manual (powertimelines)</td><td>Shim. Coordinator-only guidance moves into the <code>powerflow-coordinate</code> skill, loaded on demand instead of every turn</td></tr>
+<tr><td>Memories</td><td><code>docs/agents/memories/</code> + <code>context/</code> (PowerGit) · loose <code>docs/*.md</code> (powerplanner) · none (most)</td><td>PowerGit layout, with its README rules verbatim</td></tr>
+<tr><td>powerplan registration</td><td><code>uvx powerplan-mcp</code> · <code>python -m powerplan</code> · <code>powerspawn/powerplan/powerplan_server.py</code> · absolute <code>C:/dev/…</code> path</td><td><code>uvx powerplan-mcp</code> (published, machine-independent); submodule path only when developing powerplan itself</td></tr>
+<tr><td>E2E naming</td><td><code>NN-topic.spec.ts</code> (powertimelines, PowerNote) · <code>NN-e2e-topic</code> Node scripts (RadEAU) · unnumbered <code>tests/e2e/*.spec.ts</code> (PowerGit)</td><td><code>NN-topic.spec.ts</code>, numbers allocated from the same index as requirement prefixes</td></tr>
+<tr><td>Iteration-closure evidence</td><td>Smoke task (all) · showcase artifact with real screenshots (PowerNote) · owner tick (PowerGit) · UG-xx live sign-off (powerplanner)</td><td>Smoke task always; owner tick for owner-report tasks; showcase artifact optional per project (a PRD §quality-bar switch)</td></tr>
+<tr><td>Coordinator state across compaction</td><td>TodoWrite (powertimelines) · SQL todos + coordinator log (onslide-coordinator) · PLAN.md only (RadEAU, PowerGit)</td><td>PLAN.md via powerplan is the durable state; the skill re-derives from it every cycle. No parallel task store</td></tr>
+</tbody>
+</table>
+<figcaption>Ten drift points. Settling them once is most of the value of this repo.</figcaption>
+</figure>
+</section>
+
+<!-- ================================================================ -->
+<section id="s5">
+<div class="prose">
+<h2>5. Proposal: PowerFlow</h2>
+<p>PowerFlow is three things in one repo, and it follows its own method (PRD.md + PLAN.md operated by powerplan, from the first commit — as powerplan and RadEAU did).</p>
+<ol class="iter">
+<li><b>METHODOLOGY.md</b> — the handbook. The canonical prose of §3, roughly four pages, written once. Every project's AGENTS.md links to it instead of restating it. This is what a new collaborator or a fresh agent reads.</li>
+<li><b>templates/</b> — one file per artifact, with the drift points from §4 already decided. <code>powerflow-init</code> stamps them into a new repo and fills the placeholders from a short interview.</li>
+<li><b>skills/</b> — the flow as executable skills, each one covering a movement of the loop. Installed once at user level as a Claude Code plugin, so every project gets them without copying; the handbook and templates stay harness-agnostic for Codex/Copilot.</li>
+</ol>
+</div>
+
+<div class="two">
+<div class="figure">
+<div class="kicker" style="margin-bottom:.5rem">Repository layout</div>
+<div class="tree">PowerFlow/
+├── README.md                <span class="cm"># install + 60-second tour</span>
+├── PRD.md                   <span class="cm"># dogfood: this proposal, restated</span>
+├── PLAN.md                  <span class="cm"># operated by powerplan</span>
+├── METHODOLOGY.md           <span class="cm"># the handbook (§3 as prose)</span>
+├── AGENTS.md · CLAUDE.md    <span class="cm"># shim pattern, itself</span>
+├── .mcp.json                <span class="cm"># uvx powerplan-mcp</span>
+├── .claude-plugin/
+│   ├── plugin.json          <span class="cm"># name, version, skills path</span>
+│   └── marketplace.json     <span class="cm"># so `/plugin install` works</span>
+├── skills/
+│   ├── powerflow-init/SKILL.md
+│   ├── powerflow-prd/SKILL.md
+│   ├── powerflow-decide/SKILL.md
+│   ├── powerflow-srs/SKILL.md
+│   ├── powerflow-plan/SKILL.md
+│   ├── powerflow-slice/SKILL.md
+│   ├── powerflow-verify/SKILL.md
+│   ├── powerflow-bug/SKILL.md
+│   ├── powerflow-release/SKILL.md
+│   ├── powerflow-memory/SKILL.md
+│   ├── powerflow-coordinate/SKILL.md
+│   ├── powerflow-status/SKILL.md   <span class="cm"># adopted from powerplanner</span>
+│   └── powerflow-audit/SKILL.md
+├── templates/
+│   ├── PRD.md · PLAN.md · AGENTS.md · CLAUDE.md · README.md
+│   ├── docs/srs/README.md · SRS-template.md
+│   ├── docs/decisions/README.md · D-template.md
+│   ├── docs/agents/README.md
+│   ├── .mcp.json · .claude/settings.local.json · .claude/launch.json
+│   ├── .github/workflows/ci.yml       <span class="cm"># guards job</span>
+│   └── scripts/check-req-ids.mjs · plan-normalize.mjs · check-version.mjs
+└── docs/
+    ├── decisions/           <span class="cm"># D1 ID scheme, D2 plan header, … (§7)</span>
+    └── agents/memories/     <span class="cm"># what we learn writing skills</span></div>
+</div>
+
+<div>
+<div class="callout">
+<p><b>Why a plugin and not per-project copies.</b> You already run six plugins from <code>~/.claude/settings.json</code>. A personal PowerFlow plugin puts the thirteen skills in every session on this machine with one install, and <code>powerflow-audit</code> can later tell a project which version of the pack it was stamped with. Templates still get copied, because AGENTS.md and the SRS index must live in the project for Codex and Copilot to see them.</p>
+</div>
+<div class="callout gate">
+<p><b>Why the handbook is a separate file and not the AGENTS.md template.</b> AGENTS.md is loaded every turn and must stay short and project-specific (PowerGit's is already 12 KB). The handbook is the long, stable explanation agents read once — via a link — and humans read to onboard. Splitting them is the same move that turned CLAUDE.md into a shim.</p>
+</div>
+<div class="callout">
+<p><b>What moves in from other repos.</b> The <code>powerplan</code> ASCII-gantt skill and <code>visual-plan</code> skill currently live in powerplanner but are already written as portable ("copy into any repo with a plan file"). They become <code>powerflow-status</code>. PowerGit's <code>release</code> skill and RadEAU's <code>check-req-ids.mjs</code> become the generic <code>powerflow-release</code> and the guards template. The onslide-coordinator's dispatch contract and integrity checks become the core of <code>powerflow-coordinate</code>, minus the SQL store.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ================================================================ -->
+<section id="s6">
+<div class="prose">
+<h2>6. Skill catalog</h2>
+<p>Thirteen skills, one per movement, each distilled from a place where you already do this by hand. The trigger column is what you would say; the skill's job is to make you never re-explain the procedure. All skills that touch PLAN.md do so through powerplan tools, never by editing the file.</p>
+</div>
+<figure class="figure scroll">
+<table>
+<thead><tr><th>Skill</th><th>You say</th><th>What it does</th><th>Distilled from</th></tr></thead>
+<tbody>
+<tr><td><code>powerflow-init</code></td><td>"new project", "bootstrap PowerFlow here"</td><td>Short interview (name, one-liner, stack, platform, dual-implementation?, showcase artifact?) → copies templates, fills placeholders, writes <code>.mcp.json</code>, runs <code>create_plan</code>, creates v0.1.0 "Project initiation" with the standard first tasks, runs the smoke command, commits <code>chore: PowerFlow scaffold</code>.</td><td>RadEAU v0.1.0 · PowerGit v0.1 "Methodology" · powerplan create_plan</td></tr>
+<tr><td><code>powerflow-prd</code></td><td>"write the PRD", "refine the PRD"</td><td>Drafts or revises PRD.md against the template sections (problem, users, principles, stack, quality bar, methodology, decisions-to-record). Iterative: asks the questions the template cannot answer, one round at a time, until you say it can guide the rest.</td><td>training deck F1 · RadEAU/PowerGit/powerplan PRDs</td></tr>
+<tr><td><code>powerflow-decide</code></td><td>"record a decision", "ADR for …"</td><td>Creates <code>docs/decisions/D&lt;n&gt;-slug.md</code> (Status · Context · Decision · Consequences with the reopening gate), links it from the decisions README and the PRD table.</td><td>RadEAU docs/decisions</td></tr>
+<tr><td><code>powerflow-srs</code></td><td>"add requirements for …", "spec this feature"</td><td>Creates or extends <code>docs/srs/SRS-&lt;feature&gt;.md</code>; allocates the next IDs from the README allocator; one shall per row with rationale, verification method, trace placeholders; runs the duplicate-ID check; adds the matching PLAN task via <code>add_tasks</code>. Refuses to mark a row verified without a test path.</td><td>PowerGit docs/srs/README · powerplanner spec/srs/README · RadEAU REQUIREMENT_IDS</td></tr>
+<tr><td><code>powerflow-plan</code></td><td>"open v0.4.2", "close the iteration", "add this to the backlog"</td><td>The iteration lifecycle through powerplan: <code>create_iteration</code> with a Goal line, <code>add_tasks</code> ending in a smoke task, <code>start_iteration</code>, <code>close_iteration</code> only when every task has evidence and owner-report tasks carry the owner's tick, <code>check_plan</code> before reporting. Enforces one active iteration and Backlog-last.</td><td>powerplan tools · RadEAU PLAN discipline · PowerGit owner-tick rule</td></tr>
+<tr><td><code>powerflow-slice</code></td><td>"start the next slice", "let's do v0.5.1"</td><td>Plan mode as you teach it: explore, ask, write the brief; then translate the approved brief into SRS rows (via <code>powerflow-srs</code>) and PLAN tasks (via <code>powerflow-plan</code>) <em>before</em> the first edit. Names allowed paths and the definition of done for each task so it can be dispatched.</td><td>training deck F3 · powerplanner "CRITICAL PROCESS RULE" · ~/.claude/plans samples</td></tr>
+<tr><td><code>powerflow-verify</code></td><td>"verify", "are we done", "close the loop"</td><td>The gate before any completion claim: typecheck + unit; e2e once on the real binary (fail once → read first error → fix → once); smoke launch with console check; evidence lines collected for the report. Bans re-run loops and routine screenshots; pixel diffs only on request.</td><td>PowerGit "How we verify" + verify-loop.md · A2L-Forge NO MOCKS · your global CLAUDE.md smoke rule</td></tr>
+<tr><td><code>powerflow-bug</code></td><td>"bug: …", any owner-report sentence</td><td>Symptom-first: registers the task quoting your sentence, writes the failing test that reproduces it on the reported platform (pixels where layers compose, in-page timing for "feels laggy"), then fixes, then updates the task to "fixed &lt;sha&gt;, awaiting owner verification" and leaves it open.</td><td>PowerGit AGENTS engineering rules · training deck F5 "bugs → tests"</td></tr>
+<tr><td><code>powerflow-release</code></td><td>"release", "ship vX.Y.Z"</td><td>Preflight (iteration closed, tree clean, gates green, look at it) → bump the single version source → derivation check → build with the canonical command → smoke the packaged artifact → tag → dispatch/watch CI → release notes from closed iterations → storefront check → tick the release task. Project-specific commands come from AGENTS.md; the ritual comes from the skill.</td><td>PowerGit release skill · RadEAU PRD §9.4 · powerplan RELEASING.md</td></tr>
+<tr><td><code>powerflow-memory</code></td><td>"remember this", "that's a landmine", or after any rediscovery</td><td>Writes or corrects <code>docs/agents/memories/&lt;topic&gt;.md</code> (one fact per heading, dated when it may rot) or <code>context/&lt;feature&gt;.md</code>; refuses task status, secrets, SRS copies; prompts to delete a context file once absorbed.</td><td>PowerGit docs/agents/README</td></tr>
+<tr><td><code>powerflow-coordinate</code></td><td>"coordinate", "spawn workers for this iteration", "run the loop"</td><td>Coordinator loop over the active iteration: rehydrate from PLAN.md, pick ready tasks, dispatch through powerspawn with the full contract (goal, context, constraints, allowed paths, definition of done, report format), verify the gate yourself, tick with evidence, write memories, stop cleanly on stall. Serial by default; parallel only on disjoint paths.</td><td>powertimelines CLAUDE.md Part 2 · onslide-coordinator · powerspawn DESIGN §2.3</td></tr>
+<tr><td><code>powerflow-status</code></td><td>"where are we", "what's next", "powerplan"</td><td>The existing ASCII-gantt review (cross-checked against git) and the optional visual board — adopted as-is.</td><td>powerplanner .claude/skills/powerplan + visual-plan</td></tr>
+<tr><td><code>powerflow-audit</code></td><td>"audit this repo against PowerFlow"</td><td>Reports drift: missing artifacts, header style, SRS scheme and columns, CLAUDE.md shim or not, memories present, guards in CI, unverified requirements, iterations closed without a smoke task. Outputs a fix list as PLAN tasks. Runs first on PowerGit and RadEAU to calibrate.</td><td>§4 of this page · powertimelines "Large-Scale Audit Pattern"</td></tr>
+</tbody>
+</table>
+</figure>
+</section>
+
+<!-- ================================================================ -->
+<section id="s7">
+<div class="prose">
+<h2>7. Decisions I need from you</h2>
+<p>Each becomes <code>docs/decisions/D&lt;n&gt;</code> in PowerFlow. My recommendation is stated; say "go with the recommendations" or override individually.</p>
+</div>
+<div class="two">
+<div class="q"><h4>D1 · Requirement ID scheme</h4><p><code>SRS-&lt;FEAT&gt;-NNN</code> vs RadEAU's two-letter prefixes with a registry vs <code>CC-REQ-…</code>.</p><div class="rec"><b>Recommend</b> <code>SRS-&lt;FEAT&gt;-NNN</code>; keep RadEAU's allocator table in <code>docs/srs/README.md</code> so prefixes are still owned by exactly one file and CI-checked.</div></div>
+<div class="q"><h4>D2 · PLAN.md header</h4><p>Goal/Philosophy/Stack + PowerGit's stale-proof "Current Status" paragraph, or keep a Quick Summary with metrics.</p><div class="rec"><b>Recommend</b> the stale-proof header. Metrics belong in <code>powerflow-status</code> output, computed, not maintained.</div></div>
+<div class="q"><h4>D3 · Coordinator guidance location</h4><p>Keep it in each CLAUDE.md (powertimelines style) or move it into <code>powerflow-coordinate</code> and leave CLAUDE.md a shim.</p><div class="rec"><b>Recommend</b> the skill: it stops loading 6 KB of orchestration rules into every worker turn.</div></div>
+<div class="q"><h4>D4 · powerplan registration</h4><p><code>uvx powerplan-mcp</code> versus the powerspawn submodule path.</p><div class="rec"><b>Recommend</b> uvx in the template; <code>powerflow-init</code> offers the submodule variant when the project vendors powerspawn.</div></div>
+<div class="q"><h4>D5 · Skill naming <span class="tag done">decided</span></h4><p><code>powerflow-*</code> — matches the tool family (<code>powerplan</code>, <code>powerspawn</code>, <code>powerflow</code>) and makes the origin of a skill obvious in any project's slash menu.</p><div class="rec"><b>Decided</b> 2026-09-18: <code>powerflow-init</code>, <code>powerflow-verify</code>, … The plugin name is <code>powerflow</code>, so the full invocation reads <code>/powerflow:powerflow-verify</code> when namespaced and <code>/powerflow-verify</code> when not.</div></div>
+<div class="q"><h4>D6 · Distribution</h4><p>Personal Claude Code plugin (one install, every project) vs copying <code>.claude/skills/</code> per repo vs both.</p><div class="rec"><b>Recommend</b> plugin for skills; templates copied per project. Publish to the marketplace later only if you want others to install it.</div></div>
+<div class="q"><h4>D7 · Ownership of migrated skills</h4><p>Should powerplanner's <code>powerplan</code>/<code>visual-plan</code> and PowerGit's <code>release</code> skills be removed from their repos once PowerFlow ships them?</p><div class="rec"><b>Recommend</b> replace each with a one-line pointer file so the repos stay self-describing.</div></div>
+<div class="q"><h4>D8 · Showcase artifact</h4><p>PowerNote requires a published artifact with real screenshots per iteration; other repos do not.</p><div class="rec"><b>Recommend</b> a PRD quality-bar switch (<code>showcase: required|optional</code>) that <code>powerflow-verify</code> reads.</div></div>
+<div class="q"><h4>D9 · The autosar-101-training repo</h4><p>Not on this machine. Is there a methodology angle there (embedded close-the-loop, datasheet/SDK references from deck F5) that should shape <code>powerflow-verify</code> for embedded targets?</p><div class="rec"><b>Need</b> a path or a summary from you.</div></div>
+</div>
+</section>
+
+<!-- ================================================================ -->
+<section id="s8" class="prose">
+<h2>8. First iterations for PowerFlow's own PLAN.md</h2>
+<p>Dogfood from the first commit. Each iteration ends with its smoke test; the success criterion is borrowed from powerplan's PRD §10 — two real projects operated through the pack for one full iteration with zero manual drift.</p>
+<ol class="iter">
+<li><b>v0.1.0 — Project initiation.</b> PRD.md (this proposal restated), PLAN.md via <code>create_plan</code>, <code>.mcp.json</code>, decisions D1–D9 recorded, METHODOLOGY.md first draft from §3, this page archived under <code>docs/</code>. Smoke: <code>check_plan</code> green, <code>lint:ids</code> passes on an empty index.</li>
+<li><b>v0.1.1 — Templates + powerflow-init.</b> Every file in <code>templates/</code>; <code>powerflow-init</code> stamps a throwaway repo end to end. Smoke: the stamped repo's CI guards run green locally.</li>
+<li><b>v0.1.2 — Core loop skills.</b> <code>powerflow-plan</code>, <code>powerflow-slice</code>, <code>powerflow-srs</code>, <code>powerflow-verify</code>. Smoke: run them against PowerFlow itself to open and close v0.1.2.</li>
+<li><b>v0.1.3 — Discipline skills.</b> <code>powerflow-bug</code>, <code>powerflow-decide</code>, <code>powerflow-memory</code>, <code>powerflow-release</code>. Smoke: <code>powerflow-release</code> dry-runs against PowerGit's release skill and produces the same step list.</li>
+<li><b>v0.1.4 — Orchestration + status + audit.</b> <code>powerflow-coordinate</code> over powerspawn, <code>powerflow-status</code> adopted, <code>powerflow-audit</code>. Smoke: audit PowerGit and RadEAU; the drift table in §4 is reproduced by the tool.</li>
+<li><b>v0.2.0 — Plugin packaging + two reference installs.</b> <code>.claude-plugin/</code>, install at user level, stamp templates into one new project and retrofit one existing one (RadEAU is the cleanest candidate). Smoke: one full iteration in each with no hand-edits of PLAN.md.</li>
+<li><b>v0.2.1 — Guards package.</b> Consolidate <code>check-req-ids</code>, <code>plan-normalize</code>, <code>check-version</code> into one script set with tests; release the pack v0.2 and tag.</li>
+</ol>
+
+<div class="callout gate">
+<p><b>Next action.</b> Answer §7 (or "go with the recommendations") and I will create <code>PRD.md</code> and <code>PLAN.md</code> in PowerFlow, register powerplan, and start v0.1.0 — writing METHODOLOGY.md as the first task.</p>
+</div>
+</section>
+
+<footer>Reconstructed 2026-09-18 from the working tree of C:\dev; no file was modified. Sources cited inline by path.</footer>
+</main>
+</div>
+</div>
