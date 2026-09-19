@@ -30,7 +30,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] git init, .gitignore, first commit [agent: claude-opus-5]
 - [x] Smoke test: powerplan check_plan green; every decision file linked from docs/decisions/README.md; every skill named in PRD.md has a catalog row [agent: claude-opus-5]
 
-### v0.1.1 — Templates + powerflow-init (current) (ACTIVE)
+### v0.1.1 — Templates + powerflow-init (2026-09-19) (COMPLETE)
 **Goal:** Every project artifact as a template with the D1–D11 decisions baked in, and the skill that stamps them into a new repo.
 - [x] templates/PRD.md, PLAN.md (header per D2), AGENTS.md, CLAUDE.md shim, README.md [agent: claude-opus-5]
 - [x] templates/docs/srs/README.md (index + prefix allocator, columns per D1) + SRS-template.md [agent: claude-opus-5]
@@ -41,7 +41,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] skills/powerflow-init/SKILL.md — interview → stamp → create_plan → v0.1.0 standard tasks → smoke → first commit [agent: claude-opus-5]
 - [x] Smoke test: stamp a throwaway repo; its guards run green; check_plan green [agent: claude-opus-5]
 
-### v0.1.2 — Core loop skills
+### v0.1.2 — Core loop skills (current) (ACTIVE)
 **Goal:** The skills that run one iteration end to end: plan, slice, srs, verify, status.
 - [ ] skills/powerflow-plan — iteration lifecycle through powerplan; PLAN first and last (show_miniplan at session start, status update at session end); one active; smoke task last; owner-tick rule
 - [ ] skills/powerflow-slice — plan-mode brief → SRS rows → PLAN tasks with allowed paths + definition of done, before the first edit
