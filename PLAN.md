@@ -86,7 +86,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [ ] RadEAU retrofit: register docs/audits/RadEAU-2026-09-19.md as a 'PowerFlow retrofit' iteration in RadEAU's PLAN.md via powerplan; decide D<n> there on the XX-NNN ID scheme (keep or migrate) [agent: claude-opus-5]
 - [ ] Run one full iteration in each project using only powerflow-* skills; no hand-edit of either PLAN.md [agent: claude-opus-5]
 - [ ] Smoke test: powerflow-audit reports 0 findings on both projects; their guards are green in CI [agent: claude-opus-5]
-- [ ] Publish: create github.com/CynaCons/PowerFlow, push main + v0.2.0, set description/homepage/topics, README install via the GitHub URL (owner request 2026-09-19) [agent: claude-opus-5]
+- [x] Publish: create github.com/CynaCons/PowerFlow, push main + v0.2.0, set description/homepage/topics, README install via the GitHub URL (owner request 2026-09-19) [agent: claude-opus-5]
 
 ## Backlog
 - autosar-101-training: fold embedded close-the-loop guidance (SIL, debugger, CAN/XCP, datasheets, SDK references) into powerflow-verify once the repo is located (D9)
