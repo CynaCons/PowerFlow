@@ -50,17 +50,17 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] skills/powerflow-status — adopt the ASCII gantt + visual board from powerplanner [agent: claude-opus-5]
 - [x] Smoke test: open and close this iteration using only these skills [agent: claude-opus-5]
 
-### v0.1.3 — Discipline skills (current) (ACTIVE)
+### v0.1.3 — Discipline skills (2026-09-19) (COMPLETE)
 **Goal:** bug, decide, memory, release, prd.
-- [ ] skills/powerflow-bug — symptom-first failing test quoting the owner; task left open as 'fixed <sha>, awaiting owner verification'
-- [ ] skills/powerflow-decide — ADR file + decisions README + PRD table link
-- [ ] skills/powerflow-memory — docs/agents memories/context rules (one fact per heading, dated, corrected in place)
-- [ ] skills/powerflow-release — the ritual; project commands come from AGENTS.md
-- [ ] skills/powerflow-prd — once per project or on a major redirection (D10); refuses routine edits and points to powerflow-decide / powerflow-srs
-- [ ] Smoke test: powerflow-release dry run against PowerGit reproduces its release skill's step list
+- [x] skills/powerflow-bug — symptom-first failing test quoting the owner; task left open as 'fixed <sha>, awaiting owner verification' [agent: claude-opus-5]
+- [x] skills/powerflow-decide — ADR file + decisions README + PRD table link [agent: claude-opus-5]
+- [x] skills/powerflow-memory — docs/agents memories/context rules (one fact per heading, dated, corrected in place) [agent: claude-opus-5]
+- [x] skills/powerflow-release — the ritual; project commands come from AGENTS.md [agent: claude-opus-5]
+- [x] skills/powerflow-prd — once per project or on a major redirection (D10); refuses routine edits and points to powerflow-decide / powerflow-srs [agent: claude-opus-5]
+- [x] Smoke test: powerflow-release dry run against PowerGit reproduces its release skill's step list [agent: claude-opus-5]
 - [x] D12 turn-end miniplan (owner 2026-09-19: 'at the end of each major turn, show me the miniplan'): decision file + PRD table, METHODOLOGY.md section 3, AGENTS.md template + PowerFlow AGENTS.md, powerflow-plan / powerflow-verify report shapes end with the miniplan, one line in the owner's global CLAUDE.md [agent: claude-opus-5]
 
-### v0.1.4 — Orchestration + audit
+### v0.1.4 — Orchestration + audit (current) (ACTIVE)
 **Goal:** coordinate over powerspawn, and audit a repo against the pack.
 - [ ] skills/powerflow-coordinate — loop over the active iteration via powerspawn; dispatch contract; verify the gate yourself; serial by default, parallel only on disjoint paths
 - [ ] skills/powerflow-audit — drift report (missing artifacts, header style, SRS scheme, shim, memories, guards, unverified requirements) emitted as PLAN tasks
