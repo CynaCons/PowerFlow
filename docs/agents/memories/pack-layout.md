@@ -1,5 +1,11 @@
 # Pack layout
 
+## Since 0.3.0 (D15) there is one skill: skills/powerflow/
+`SKILL.md` is the canonical method; `scripts/stamp.py`, `scripts/audit.py`,
+`references/{workers,release,smoke}.md`. `PACK_ROOT = parents[3]` from the
+scripts still resolves to the repo root. Guards live in `extras/guards/` (opt-in)
+with their tests; `npm test` runs them. 2026-09-19.
+
 ## Skills find templates through the pack root, not a copy
 `skills/<name>/scripts/*.py` resolve `PACK_ROOT = Path(__file__).resolve().parents[3]`
 and read `PACK_ROOT/templates/`. This works in the repo and in an installed

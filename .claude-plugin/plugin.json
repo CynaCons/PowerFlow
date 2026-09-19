@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "powerflow",
-  "version": "0.2.0",
-  "description": "The PRD -> decisions -> SRS -> PLAN -> agents -> verify -> release methodology as thirteen powerflow-* skills: init, prd, decide, srs, plan, slice, verify, bug, release, memory, coordinate, status, audit. Pairs with the powerplan MCP (PLAN.md single writer) and PowerSpawn (workers).",
+  "version": "0.3.0",
+  "description": "The PowerFlow method as one skill: PRD once, PLAN.md through powerplan (miniplan first, last and per turn), SRS rows before code, close the loop before done, bugs failing-test-first, PowerSpawn workers with a full brief, memories, release, audit.",
   "author": {
     "name": "Constantin Chabirand (CynaCons)",
     "url": "https://github.com/CynaCons"

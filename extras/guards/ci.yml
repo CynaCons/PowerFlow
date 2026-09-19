@@ -1,0 +1,38 @@
+# Example CI for a project that opted into the PowerFlow guards (extras/guards).
+# Copy the three scripts into scripts/ and this file into .github/workflows/.
+# The `guards` job needs only Node; replace the placeholders in `build`.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  guards:
+    name: static guards (plan, requirement IDs, version)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: PLAN.md structure (mirrors powerplan check_plan)
+        run: node scripts/check-plan.mjs
+      - name: Requirement IDs unique, one tag per file
+        run: node scripts/check-req-ids.mjs
+      - name: Single version source
+        run: node scripts/check-version.mjs
+
+  build:
+    name: typecheck + unit tests
+    runs-on: ubuntu-latest
+    needs: guards
+    steps:
+      - uses: actions/checkout@v4
+      # add the toolchain setup for {{stack}} here (setup-node / setup-python / rust-toolchain / setup-dotnet)
+      - name: Typecheck
+        run: {{typecheck_command}}
+      - name: Unit tests
+        run: {{test_command}}

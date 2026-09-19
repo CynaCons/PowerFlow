@@ -80,15 +80,28 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] Guards consolidated: --root on check-req-ids/check-version, 17 node --test cases (npm test), stamp --force protects stateful files; projects vendor them via powerflow-init (npx deferred with the public marketplace, D13) [agent: claude-opus-5]
 - [x] Tag v0.2.0 (plugin.json version) on the plan-close commit; CHANGELOG.md 0.2.0 from the closed iterations; PowerFlow CI + version consistency in check.py [agent: claude-opus-5]
 
-### v0.2.2 — Reference installs (owner) (current) (ACTIVE)
+### v0.2.2 — Reference installs (owner) (2026-09-19 — published; reference installs deferred to backlog) (COMPLETE)
 **Goal:** Two real projects run one full iteration each through the pack with zero hand-edits of PLAN.md - moved from v0.2.0 on 2026-09-19 because both need the owner: a new project to stamp (name it) and RadEAU's retrofit registered in RadEAU's own plan from docs/audits/RadEAU-2026-09-19.md.
-- [ ] Owner names the new project; powerflow-init stamps it (interview, stamp, plan through powerplan, PRD conversation, first commit) [agent: claude-opus-5]
-- [ ] RadEAU retrofit: register docs/audits/RadEAU-2026-09-19.md as a 'PowerFlow retrofit' iteration in RadEAU's PLAN.md via powerplan; decide D<n> there on the XX-NNN ID scheme (keep or migrate) [agent: claude-opus-5]
-- [ ] Run one full iteration in each project using only powerflow-* skills; no hand-edit of either PLAN.md [agent: claude-opus-5]
-- [ ] Smoke test: powerflow-audit reports 0 findings on both projects; their guards are green in CI [agent: claude-opus-5]
 - [x] Publish: create github.com/CynaCons/PowerFlow, push main + v0.2.0, set description/homepage/topics, README install via the GitHub URL (owner request 2026-09-19) [agent: claude-opus-5]
+
+## v0.3 — Lean
+> Owner 2026-09-19: "way too complicated... too many constraints... strip the fat, keep the essential." One skill describing it all; powerplan and PowerSpawn usage are the parts that matter.
+
+### v0.3.0 — One skill (current) (ACTIVE)
+**Goal:** Replace the 13-skill pack with one `powerflow` skill that describes the whole method section by section, with powerplan usage and PowerSpawn usage as the load-bearing sections (PowerSpawn is about to be enhanced a lot); ~1,900 lines to ~500, always-on tokens divided by ten, a new project starts with a handful of files and a plan.
+- [ ] D15 Lean pack recorded as a direction change; D1-D15 folded into one DECISIONS.md log; docs/decisions/ removed; PRD trimmed to one page with a revision status line [agent: claude-opus-5]
+- [ ] skills/powerflow/SKILL.md: the whole method section by section - start a project, the plan (powerplan tools, bookends, miniplan each turn), requirements, a slice, close the loop, owner reports, workers (PowerSpawn tools, CLI vs API, dispatch contract, validate yourself, what is coming: persistent agents / ask-coordinator / advisor panel), memories + decisions, release, audit [agent: claude-opus-5]
+- [ ] skills/powerflow/scripts: stamp.py (7 templates, stateful protection, plugin detection) + audit.py (lean rules); references/workers.md, release.md, smoke.md; the other 12 skill dirs, srs.py and decide.py deleted [agent: claude-opus-5]
+- [ ] templates cut to the essential set (PRD, AGENTS ~40 lines, CLAUDE shim, docs/srs/README tag index without allocator, .mcp.json variants, settings variants, .gitignore); guards + CI example + 17 tests moved to extras/guards/ as opt-in; check-req-ids works without an allocator table [agent: claude-opus-5]
+- [ ] PowerFlow itself lean: METHODOLOGY.md, docs/srs/, templates/_index.md, mcp-servers.md removed; README carries the ten rules + install; AGENTS.md short; scripts/check.py reduced to check_plan + versions + extras tests; plugin/package/CHANGELOG 0.3.0 [agent: claude-opus-5]
+- [ ] Smoke test: claude plugin validate green and details lists exactly 1 skill; stamp a throwaway (handful of files, plan via powerplan); audit.py on PowerFlow reports 0; reinstall the plugin; push + tag v0.3.0 [agent: claude-opus-5]
+- [ ] GitHub Pages site for PowerFlow (owner request 2026-09-19): one static page (the loop, the ten rules, install, links to the skill and the repo), deployed by a pages workflow; Pages enabled on the repo; link handed to the owner [agent: claude-opus-5]
 
 ## Backlog
 - autosar-101-training: fold embedded close-the-loop guidance (SIL, debugger, CAN/XCP, datasheets, SDK references) into powerflow-verify once the repo is located (D9)
 - Bidirectional test ↔ requirement map generator for docs/srs/README.md
 - powerflow-audit reports the pack version a project was stamped with
+- Owner names the new project; powerflow-init stamps it (interview, stamp, plan through powerplan, PRD conversation, first commit) (deferred from v0.2.2: owner-dependent; resumes after the v0.3.0 lean rewrite with the one-skill pack) [agent: claude-opus-5]
+- RadEAU retrofit: register docs/audits/RadEAU-2026-09-19.md as a 'PowerFlow retrofit' iteration in RadEAU's PLAN.md via powerplan; decide D<n> there on the XX-NNN ID scheme (keep or migrate) (deferred from v0.2.2: owner-dependent; resumes after the v0.3.0 lean rewrite with the one-skill pack) [agent: claude-opus-5]
+- Run one full iteration in each project using only powerflow-* skills; no hand-edit of either PLAN.md (deferred from v0.2.2: owner-dependent; resumes after the v0.3.0 lean rewrite with the one-skill pack) [agent: claude-opus-5]
+- Smoke test: powerflow-audit reports 0 findings on both projects; their guards are green in CI (deferred from v0.2.2: owner-dependent; resumes after the v0.3.0 lean rewrite with the one-skill pack) [agent: claude-opus-5]

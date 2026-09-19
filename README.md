@@ -1,69 +1,54 @@
 # PowerFlow
 
-**The method, codified once.** PRD → decisions → SRS → PLAN → agents →
-verify → release, as a handbook, a template set and a `powerflow-*` skill
-plugin for Claude Code — so every project runs the same flow without
-re-specifying it.
+**One skill for the way I build software with agents.** PRD once · PLAN.md
+through [powerplan](https://github.com/CynaCons/powerplan) · SRS rows before
+code · close the loop before "done" · bugs failing-test-first · workers through
+[PowerSpawn](https://github.com/CynaCons/PowerSpawn).
 
-| | |
-|---|---|
-| **Handbook** | [METHODOLOGY.md](METHODOLOGY.md) — the canonical text, ~5 pages |
-| **Requirements** | [PRD.md](PRD.md) · decisions in [docs/decisions/](docs/decisions/README.md) |
-| **Plan** | [PLAN.md](PLAN.md) — operated by [powerplan](https://github.com/CynaCons/powerplan) |
-| **Pairs with** | [powerplan](https://github.com/CynaCons/powerplan) (PLAN.md single writer) · [PowerSpawn](https://github.com/CynaCons/PowerSpawn) (workers) |
-| **Status** | 0.2.0 — installable; reference installs pending (PLAN.md v0.2.2) |
+Site: **https://cynacons.github.io/PowerFlow/** · The method:
+[skills/powerflow/SKILL.md](skills/powerflow/SKILL.md) · Decisions:
+[DECISIONS.md](DECISIONS.md) · Plan: [PLAN.md](PLAN.md)
 
-## What it is
+## The ten rules
 
-```
-METHODOLOGY.md          how work is done here — read once, link forever
-templates/              PRD, PLAN header, AGENTS, CLAUDE shim, SRS index + file,
-                        decisions, agents README, .mcp.json, CI guards
-skills/powerflow-*/     one skill per movement of the loop (13)
-.claude-plugin/         install once at user level, use in every project
-```
-
-## The loop in one line
-
-Every session: **`show_miniplan` first, plan status update last.** Every
-iteration: plan/docs → implement → verify → release, ending on a smoke test.
-Every feature: an SRS row before code. Every owner report: a failing test
-first, closed by the owner.
-
-## Skills
-
-| Skill | Use it when |
-|---|---|
-| `powerflow-init` | starting a project |
-| `powerflow-prd` | the project starts, or changes direction (never routinely) |
-| `powerflow-decide` | a constraint is chosen |
-| `powerflow-srs` | a feature is specified |
-| `powerflow-slice` | starting the next slice |
-| `powerflow-plan` | opening, ticking, closing iterations |
-| `powerflow-verify` | before saying "done" |
-| `powerflow-bug` | the owner reports a defect |
-| `powerflow-release` | shipping |
-| `powerflow-memory` | something durable was learned |
-| `powerflow-coordinate` | running workers over an iteration |
-| `powerflow-status` | "where are we?" |
-| `powerflow-audit` | checking a repo against the pack |
+1. **PRD once.** Iterate it with the agent at the start; rewrite only on a
+   declared change of direction.
+2. **PLAN.md is the backbone**, written only by powerplan: iterations,
+   checkboxes, smoke task last, a header that cannot go stale.
+3. **Miniplan first, last, and at the end of every major turn** — the console
+   shows the state when you come back.
+4. **Register work before doing it**; tick only with evidence.
+5. **SRS rows before code**: `SRS-<FEAT>-NNN`, one shall per row, never reused.
+6. **Close the loop before "done"**: tests once, the app launches clean, look
+   at the UI you changed.
+7. **Owner reports**: quote the owner, failing test first, the owner ticks.
+8. **Short AGENTS.md, CLAUDE.md a shim, memories** when you hit a landmine.
+9. **Workers get the whole brief** (goal + gate, context, allowed paths, done
+   when, report shape); the coordinator verifies, commits, then ticks.
+10. **Release is a checklist**, never from an open iteration; check CI before
+    dispatching it.
 
 ## Install
 
 ```bash
-claude plugin marketplace add CynaCons/PowerFlow             # this repo is the marketplace
-claude plugin install powerflow@powerflow                    # user scope: every project, every session
+claude plugin marketplace add CynaCons/PowerFlow
+claude plugin install powerflow@powerflow      # user scope: every project, every session
+pip install powerplan-mcp                      # the plugin registers powerplan as `python -m powerplan`
 ```
 
-The plugin also registers the `powerplan` MCP server (`python -m powerplan`,
-needs `pip install powerplan-mcp`) so `show_miniplan` works in every session
-(D14). Then in a new or existing repo: `/powerflow-init` — or just say "start a
-new project". `claude plugin details powerflow@powerflow` lists the 13 skills.
+Restart Claude Code. In a new directory: *"start a new project"*. In an
+existing repo: *"audit this repo against PowerFlow"*. Any time: *"where are
+we"*, *"start the next slice"*, *"verify"*, *"bug: …"*, *"spawn workers for
+this"*, *"release"*.
 
-## Origin
+## What's in the repo
 
-Distilled 2026-09-18 from eleven repositories by the same author; the
-analysis is archived at [docs/proposal-2026-09-18.html](docs/proposal-2026-09-18.html).
+```
+skills/powerflow/    SKILL.md · scripts/stamp.py · scripts/audit.py · references/{workers,release,smoke}.md
+templates/           PRD · AGENTS · CLAUDE shim · docs/srs/README · .mcp.json · .claude/settings · .gitignore
+extras/guards/       opt-in CI guards (plan, requirement IDs, version) + tests
+DECISIONS.md         D1–D15, why things are the way they are
+```
 
 ## License
 

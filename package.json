@@ -1,11 +1,11 @@
 {
   "name": "powerflow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "The PowerFlow methodology pack — handbook, templates, powerflow-* skills. Version source: .claude-plugin/plugin.json (this file must match).",
+  "description": "The PowerFlow methodology pack \u2014 one skill, templates, opt-in guards. Version source: .claude-plugin/plugin.json (this file must match).",
   "type": "module",
   "scripts": {
-    "test": "node --test \"tests/guards/**/*.test.mjs\"",
+    "test": "node --test \"extras/guards/tests/**/*.test.mjs\"",
     "check": "python scripts/check.py"
   },
   "license": "MIT"

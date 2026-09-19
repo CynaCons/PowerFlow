@@ -8,7 +8,7 @@ on:
 
 jobs:
   check:
-    name: pack checks (plan, decisions, req-ids, skills, versions) + guard tests
+    name: plan · versions · guard tests · one skill
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,9 +19,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install powerplan-mcp
-      - name: check-plan mirror agrees with powerplan on our own PLAN.md (D13 gate)
-        run: node templates/scripts/check-plan.mjs PLAN.md
-      - name: Pack checks — check_plan, decisions, check-req-ids, skills, check-version (plugin/package/changelog), guard tests
+      - name: Node mirror agrees with powerplan on our own PLAN.md (D13 gate)
+        run: node extras/guards/check-plan.mjs PLAN.md
+      - name: Requirement IDs (none yet) and version source, with the opt-in guards
+        run: node extras/guards/check-req-ids.mjs --root . && node extras/guards/check-version.mjs --root . --changelog
+      - name: check.py — check_plan, versions, guard tests, one skill
         run: python scripts/check.py
-      - name: Guard tests
-        run: npm test

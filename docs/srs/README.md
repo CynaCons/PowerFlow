@@ -1,55 +1,27 @@
-# Software Requirements Specification (SRS)
+# Requirements — PowerFlow
 
-Requirements for PowerFlow, ASPICE-style. Each `SRS-<feature>.md` states
-what the product **shall** do for one feature area, as uniquely identified,
-verifiable, traceable shall-statements. This layer is **what**; design notes
-and code are **how**. Product intent: [PRD.md](../../PRD.md). Priority is
-implied by [PLAN.md](../../PLAN.md), not a column here.
+One `SRS-<feature>.md` per feature area. Each opens with a table:
 
-## Requirement ID scheme (PowerFlow D1)
-
-`SRS-<FEAT>-<NNN>` — `FEAT` is the feature tag, owned by exactly one file in
-this directory; `NNN` a zero-padded sequence that is **never reused or
-renumbered**. Superseded requirements are marked `(superseded by …)` in the
-Requirement cell, not deleted. `scripts/check-req-ids.mjs` fails CI on a
-duplicate definition or a tag defined in two files.
-
-## Allocator — the single source of tags and numbers
-
-| Tag | File | Feature | Allocated | Next free |
+| ID | Requirement | Rationale | Verification | Trace |
 |---|---|---|---|---|
-| SKILL | SRS-skills.md | Skills | 001–013 | 014 |
 
-E2E test numbers (`tests/**/NN-topic.spec.ts`) are allocated here too:
-allocated none · next free `01`.
+- **ID** `SRS-<FEAT>-NNN`. The tag is owned by exactly one file (below); the
+  next number is the highest in that file + 1; numbers are never reused — a
+  changed requirement is a new row, the old one marked `(superseded by …)`.
+- **Requirement** one testable *shall*; a number instead of "fast".
+- **Verification** `Test` (preferred) · `Analysis` · `Review` · `Demo`.
+- **Trace** the test path once it exists. A `Test` row with no path is not
+  verified. Priority is the plan's, not a column here.
 
-## Table format
+Rows are written before the code that satisfies them and land in the same
+change. A named feature does not ship without its file.
 
-Every SRS file opens with this table:
+PowerFlow's behaviour is the skill text (`skills/powerflow/SKILL.md`); an SRS
+file appears here when a script grows a contract worth rows (the `stamp.py`
+answers schema is the first candidate).
 
-| Column | Meaning |
-|---|---|
-| **ID** | `SRS-<FEAT>-<NNN>`, stable forever |
-| **Requirement** | One testable "shall" |
-| **Rationale** | Why it exists — intent, not restatement |
-| **Verification** | `Test`, `Analysis`, `Review`, `Demo` |
-| **Trace** | Design §, implementation path, test path — filled as code lands |
+## Tags
 
-Rules: one shall per row; no "fast" or "nice" without a number;
-implementation-neutral unless the feature is platform-specific (`[linux]`,
-`[windows]`, `[macos]`, `[web]`, `[native]`). A row with no test path in
-Trace is not verified. The most valuable rows are interaction semantics —
-which control wins when states disagree — with an explicit priority order.
-
-## Verification methods
-
-- **Test** — automated. Prefer this; cite the test file.
-- **Analysis** — argued from the algorithm or spec when a test is impractical.
-- **Review** — inspection against a reference behaviour or this SRS.
-- **Demo** — shown in the running app; record what was demonstrated.
-
-## Coverage rule
-
-A named product feature does not ship without an SRS file. New features get a
-new file (or new rows) **before** implementation, and the rows land in the
-same change as the code that satisfies them.
+| Tag | File | Feature |
+|---|---|---|
+| | | |
