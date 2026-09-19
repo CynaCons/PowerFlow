@@ -41,7 +41,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] skills/powerflow-init/SKILL.md — interview → stamp → create_plan → v0.1.0 standard tasks → smoke → first commit [agent: claude-opus-5]
 - [x] Smoke test: stamp a throwaway repo; its guards run green; check_plan green [agent: claude-opus-5]
 
-### v0.1.2 — Core loop skills (current) (ACTIVE)
+### v0.1.2 — Core loop skills (2026-09-19) (COMPLETE)
 **Goal:** The skills that run one iteration end to end: plan, slice, srs, verify, status.
 - [x] skills/powerflow-plan — iteration lifecycle through powerplan; PLAN first and last (show_miniplan at session start, status update at session end); one active; smoke task last; owner-tick rule [agent: claude-opus-5]
 - [x] skills/powerflow-slice — plan-mode brief → SRS rows → PLAN tasks with allowed paths + definition of done, before the first edit [agent: claude-opus-5]
@@ -50,7 +50,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] skills/powerflow-status — adopt the ASCII gantt + visual board from powerplanner [agent: claude-opus-5]
 - [x] Smoke test: open and close this iteration using only these skills [agent: claude-opus-5]
 
-### v0.1.3 — Discipline skills
+### v0.1.3 — Discipline skills (current) (ACTIVE)
 **Goal:** bug, decide, memory, release, prd.
 - [ ] skills/powerflow-bug — symptom-first failing test quoting the owner; task left open as 'fixed <sha>, awaiting owner verification'
 - [ ] skills/powerflow-decide — ADR file + decisions README + PRD table link
