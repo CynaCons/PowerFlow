@@ -31,3 +31,9 @@ let `tests/guards/guards.test.mjs` drive them against temp fixtures. CI runs
 `node templates/scripts/check-plan.mjs PLAN.md` beside `check.py` so a
 disagreement between the mirror and powerplan's `check_plan` shows up here first
 (D13 reopen gate).
+
+## subprocess on POSIX: a list with shell=True runs only the first element
+`subprocess.run(["npm", "test"], shell=True)` ran a bare `npm` on ubuntu-latest
+(CI red on the first push, 2026-09-19) while Windows joined the list. Call the
+binary directly without a shell (`["node", "--test", "<glob>"]`); node expands
+its own test globs on both platforms.
