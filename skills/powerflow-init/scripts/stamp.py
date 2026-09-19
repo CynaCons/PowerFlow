@@ -29,6 +29,10 @@ import sys
 from datetime import date
 from pathlib import Path
 
+for _stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+
 HERE = Path(__file__).resolve()
 PACK_ROOT = HERE.parents[3]                 # PowerFlow/
 TEMPLATES = PACK_ROOT / "templates"
@@ -161,7 +165,7 @@ def main() -> None:
         print(f"  + {f}")
     for f in kept:
         print(f"  = {f} (exists, kept; --force to overwrite)")
-    print("stamp: PLAN.md is not written here — create it through powerplan (see SKILL.md step 4)")
+    print("stamp: PLAN.md is not written here -- create it through powerplan (see SKILL.md step 4)")
 
 
 if __name__ == "__main__":

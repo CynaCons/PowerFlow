@@ -8,6 +8,7 @@ Checks, exit 1 on any failure:
   3. Every skill named in PRD.md §5 (`powerflow-*`) has skills/<name>/SKILL.md,
      or is still an open PLAN task (reported as pending, not as a failure).
   4. Every decision file has Status / Context / Decision / Consequences.
+  5. scripts/check-req-ids.mjs (the stamped guard) passes on docs/srs/.
 """
 
 from __future__ import annotations
@@ -62,8 +63,22 @@ def check_skills() -> None:
     plan = (ROOT / "PLAN.md").read_text(encoding="utf-8")
     have = 0
     for name in names:
-        if (ROOT / "skills" / name / "SKILL.md").is_file():
+        skill = ROOT / "skills" / name / "SKILL.md"
+        if skill.is_file():
             have += 1
+            fm = re.match(r"---\n(.*?)\n---\n", skill.read_text(encoding="utf-8"), flags=re.S)
+            if not fm:
+                FAIL.append(f"skill {name}: SKILL.md has no YAML frontmatter")
+                continue
+            head = fm.group(1)
+            if not re.search(rf"^name: {re.escape(name)}\s*$", head, flags=re.M):
+                FAIL.append(f"skill {name}: frontmatter name does not match the directory")
+            desc = re.search(r"^description: (.+)$", head, flags=re.M)
+            if not desc or len(desc.group(1).strip()) < 80:
+                FAIL.append(f"skill {name}: description missing or too short to trigger on")
+            body_lines = skill.read_text(encoding="utf-8").count("\n")
+            if body_lines > 500:
+                FAIL.append(f"skill {name}: SKILL.md is {body_lines} lines; keep under 500 (move detail to references/)")
         elif re.search(rf"^- \[ \] .*\b{re.escape(name)}\b", plan, flags=re.M):
             PEND.append(f"skill {name}: not yet written (open PLAN task)")
         else:
@@ -71,9 +86,18 @@ def check_skills() -> None:
     print(f"skills: {have}/{len(names)} present")
 
 
+def check_req_ids() -> None:
+    import subprocess
+    r = subprocess.run(["node", "scripts/check-req-ids.mjs"], cwd=ROOT, capture_output=True, text=True)
+    print((r.stdout.strip().splitlines() or ["check-req-ids: no output"])[0])
+    if r.returncode != 0:
+        FAIL.append("check-req-ids.mjs: " + (r.stderr.strip() or r.stdout.strip()))
+
+
 def main() -> int:
     check_plan()
     check_decisions()
+    check_req_ids()
     check_skills()
     for line in PEND:
         print(f"pending  {line}")

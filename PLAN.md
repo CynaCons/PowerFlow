@@ -43,12 +43,12 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 
 ### v0.1.2 — Core loop skills (current) (ACTIVE)
 **Goal:** The skills that run one iteration end to end: plan, slice, srs, verify, status.
-- [ ] skills/powerflow-plan — iteration lifecycle through powerplan; PLAN first and last (show_miniplan at session start, status update at session end); one active; smoke task last; owner-tick rule
-- [ ] skills/powerflow-slice — plan-mode brief → SRS rows → PLAN tasks with allowed paths + definition of done, before the first edit
-- [ ] skills/powerflow-srs — create/extend docs/srs/SRS-<feature>.md, allocate IDs, duplicate check, matching PLAN task
-- [ ] skills/powerflow-verify — the gate: typecheck + unit, e2e once, smoke launch with console check, evidence lines; screenshot policy; showcase switch (D8)
-- [ ] skills/powerflow-status — adopt the ASCII gantt + visual board from powerplanner
-- [ ] Smoke test: open and close this iteration using only these skills
+- [x] skills/powerflow-plan — iteration lifecycle through powerplan; PLAN first and last (show_miniplan at session start, status update at session end); one active; smoke task last; owner-tick rule [agent: claude-opus-5]
+- [x] skills/powerflow-slice — plan-mode brief → SRS rows → PLAN tasks with allowed paths + definition of done, before the first edit [agent: claude-opus-5]
+- [x] skills/powerflow-srs — create/extend docs/srs/SRS-<feature>.md, allocate IDs, duplicate check, matching PLAN task [agent: claude-opus-5]
+- [x] skills/powerflow-verify — the gate: typecheck + unit, e2e once, smoke launch with console check, evidence lines; screenshot policy; showcase switch (D8) [agent: claude-opus-5]
+- [x] skills/powerflow-status — adopt the ASCII gantt + visual board from powerplanner [agent: claude-opus-5]
+- [x] Smoke test: open and close this iteration using only these skills [agent: claude-opus-5]
 
 ### v0.1.3 — Discipline skills
 **Goal:** bug, decide, memory, release, prd.
