@@ -44,11 +44,14 @@ its output in the report. Verify command: `{{verify_command}}`.
   console error. Build passing ≠ feature working.
 - Selection only on stable `data-testid`; semantic waits; no raw sleeps.
 
-## Session bookends
+## Bookends
 
-Open with `powerplan show_miniplan`. Close with the status update through
-powerplan (tasks ticked with evidence, discovered work added, `check_plan`
-green). The conversation is not state; the plan is.
+Open every session with `powerplan show_miniplan`. Close it with the status
+update through powerplan (tasks ticked with evidence, discovered work added,
+`check_plan` green). **End every major turn** — one that changed files, ticked
+or added tasks, ran a gate or closed an iteration — by showing the miniplan
+verbatim in a fenced block, so the owner returning to the console sees state
+at a glance. The conversation is not state; the plan is.
 
 ## Who owns which files
 

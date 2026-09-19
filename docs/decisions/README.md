@@ -16,3 +16,4 @@ name the gate that would reopen the decision. IDs are never reused.
 - [D9 — autosar-101-training](D9-autosar-training.md) — open; repo not located.
 - [D10 — PRD cadence](D10-prd-cadence.md) — once per project or on a major redirection.
 - [D11 — Session bookends](D11-session-bookends.md) — PLAN.md first (`show_miniplan`) and last (status update).
+- [D12 — Turn-end miniplan](D12-turn-end-miniplan.md) — every major turn ends with the miniplan displayed verbatim.

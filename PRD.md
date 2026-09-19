@@ -62,7 +62,8 @@ re-specification cost, and every agent session pays it again in context.
    the ritual comes from the skill.
 4. **PLAN.md first and last.** Every working session opens on the current
    iteration (`show_miniplan`) and closes by updating its status through
-   powerplan. The plan is the durable session state; the conversation is not.
+   powerplan; every major turn ends by showing the miniplan (D12). The plan
+   is the durable session state; the conversation is not.
 5. **PRD once.** A PRD is written when a project starts and rewritten only on a
    major change of direction. Routine change goes to decisions, SRS and PLAN.
 6. **Evidence or it didn't happen.** Inherited from powerplan: a task is ticked
@@ -151,6 +152,7 @@ re-specification cost, and every agent session pays it again in context.
 | D9 | autosar-101-training | Open — repo not on this machine |
 | D10 | PRD cadence | Once per project, or on a major change of direction; never for routine change |
 | D11 | Session bookends | PLAN.md first (`show_miniplan`) and last (status update via powerplan) in every working session |
+| D12 | Turn-end miniplan | Every major turn ends with the miniplan displayed verbatim, so the owner returning to the console sees state at a glance |
 
 ## 10. Success criteria
 

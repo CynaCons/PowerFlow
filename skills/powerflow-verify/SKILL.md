@@ -90,6 +90,9 @@ ticked: <indexes> · open: <index> — <missing proof>
 close_iteration vX.Y.Z: <done | blocked by …> · check_plan ok
 ```
 
+Followed by the miniplan in its own fenced block (D12) — the owner returning to
+the console sees the state, then the evidence.
+
 ## What not to do
 
 - Do not report "tests pass" without the command and the count.

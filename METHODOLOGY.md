@@ -113,6 +113,13 @@ Every working session has the same two bookends (D11):
 The conversation is not state. If the context compacts, the plan is where
 work resumes. A session that ends without the status update did not happen.
 
+**Every major turn ends with the miniplan** (D12). After a turn that changed
+files, ticked or added tasks, ran a gate or closed an iteration, the report
+ends with the raw `show_miniplan` output in a fenced block — before any
+question to the owner. The owner context-switches; the console must show
+state at a glance, not a narrative to re-read. A quick answer that changed
+nothing needs no block.
+
 ## 4. Iterations: the four movements
 
 Each `vX.Y.Z` walks the same four movements, in order (RadEAU PRD §9.1):
@@ -281,4 +288,4 @@ where are we         powerflow-status    →  ASCII gantt vs git
 does this repo drift powerflow-audit     →  findings as PLAN tasks
 ```
 
-Every session: **miniplan first, status update last.**
+Every session: **miniplan first, status update last.** Every major turn: **ends with the miniplan.**

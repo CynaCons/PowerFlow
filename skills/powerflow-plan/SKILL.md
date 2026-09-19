@@ -106,3 +106,7 @@ Iteration vX.Y.Z — <n>/<m> tasks
 check_plan: ok · commit <sha>
 Next: <the first open task, or the next iteration>
 ```
+
+Then the miniplan, verbatim, in its own fenced block (D12). This applies to
+every major turn, not only the session's last one: the owner switches
+contexts and reads the console cold — the block is what they see first.

@@ -124,6 +124,8 @@ Smoke: <command> → <result | pending scaffold>
 Next: <the first open task>, or "restart the session so powerplan tools load"
 ```
 
+Then the miniplan of the new plan, verbatim (D12).
+
 ## What not to do
 
 - Do not copy `templates/PLAN.md` — it is a rendering of what powerplan

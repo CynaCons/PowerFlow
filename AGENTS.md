@@ -40,11 +40,12 @@ PRD.md §5 has a directory under `skills/`, and a stamped throwaway repo passes
 its own guards (`powerflow-init` smoke). A skill is verified by running it in
 a real project and pasting the resulting PLAN.md / SRS diff in the report.
 
-## Session bookends
+## Bookends
 
-Open with `show_miniplan` (or `get_current_iteration` until powerplan 0.8.0
-is on this machine). Close with the status update through powerplan and
-`check_plan`. See METHODOLOGY.md §3.
+Open every session with `show_miniplan`. Close it with the status update
+through powerplan and `check_plan`. End every major turn (files changed, tasks
+ticked or added, a gate run, an iteration closed) by showing the miniplan
+verbatim in a fenced block (D12). See METHODOLOGY.md §3.
 
 ## Who owns which files
 
