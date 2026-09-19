@@ -17,3 +17,4 @@ name the gate that would reopen the decision. IDs are never reused.
 - [D10 — PRD cadence](D10-prd-cadence.md) — once per project or on a major redirection.
 - [D11 — Session bookends](D11-session-bookends.md) — PLAN.md first (`show_miniplan`) and last (status update).
 - [D12 — Turn-end miniplan](D12-turn-end-miniplan.md) — every major turn ends with the miniplan displayed verbatim.
+- [D13 — Guards are Node scripts mirroring powerplan](D13-guards-in-node.md) — CI guards are vendored .mjs files needing only Node; check-plan mirrors powerplan's check_plan, which stays the authority

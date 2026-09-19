@@ -153,6 +153,7 @@ re-specification cost, and every agent session pays it again in context.
 | D10 | PRD cadence | Once per project, or on a major change of direction; never for routine change |
 | D11 | Session bookends | PLAN.md first (`show_miniplan`) and last (status update via powerplan) in every working session |
 | D12 | Turn-end miniplan | Every major turn ends with the miniplan displayed verbatim, so the owner returning to the console sees state at a glance |
+| D13 | Guards are Node scripts mirroring powerplan | CI guards are vendored .mjs files needing only Node; check-plan mirrors powerplan's check_plan, which stays the authority |
 
 ## 10. Success criteria
 

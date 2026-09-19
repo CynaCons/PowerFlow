@@ -58,7 +58,7 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [ ] skills/powerflow-release — the ritual; project commands come from AGENTS.md
 - [ ] skills/powerflow-prd — once per project or on a major redirection (D10); refuses routine edits and points to powerflow-decide / powerflow-srs
 - [ ] Smoke test: powerflow-release dry run against PowerGit reproduces its release skill's step list
-- [ ] D12 turn-end miniplan (owner 2026-09-19: 'at the end of each major turn, show me the miniplan'): decision file + PRD table, METHODOLOGY.md section 3, AGENTS.md template + PowerFlow AGENTS.md, powerflow-plan / powerflow-verify report shapes end with the miniplan, one line in the owner's global CLAUDE.md [agent: claude-opus-5]
+- [x] D12 turn-end miniplan (owner 2026-09-19: 'at the end of each major turn, show me the miniplan'): decision file + PRD table, METHODOLOGY.md section 3, AGENTS.md template + PowerFlow AGENTS.md, powerflow-plan / powerflow-verify report shapes end with the miniplan, one line in the owner's global CLAUDE.md [agent: claude-opus-5]
 
 ### v0.1.4 — Orchestration + audit
 **Goal:** coordinate over powerspawn, and audit a repo against the pack.
