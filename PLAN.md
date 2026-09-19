@@ -75,12 +75,12 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] RadEAU audit fix list produced (docs/audits/RadEAU-2026-09-19.md, 10 findings, judgment pass noted); D7 pointers committed in powerplanner (f13df1d); PowerFlow self-stamped (.powerflow/init.json). Stamping a new project and the RadEAU retrofit itself moved to v0.2.2 (owner) [agent: claude-opus-5]
 - [x] Smoke test: claude plugin validate green (manifest, marketplace, 13 skills); installed at user scope; details lists 13 skills; throwaway re-stamped with plugin detection (settings.local.json disables the project copy, D14) [agent: claude-opus-5]
 
-### v0.2.1 — Guards package (current) (ACTIVE)
+### v0.2.1 — Guards package (2026-09-19) (COMPLETE)
 **Goal:** check-req-ids, plan-normalize and check-version as one tested script set.
-- [ ] Consolidate the three guard scripts with tests; projects vendor or npx them
-- [ ] Tag v0.2; release notes from the closed iterations
+- [x] Guards consolidated: --root on check-req-ids/check-version, 17 node --test cases (npm test), stamp --force protects stateful files; projects vendor them via powerflow-init (npx deferred with the public marketplace, D13) [agent: claude-opus-5]
+- [x] Tag v0.2.0 (plugin.json version) on the plan-close commit; CHANGELOG.md 0.2.0 from the closed iterations; PowerFlow CI + version consistency in check.py [agent: claude-opus-5]
 
-### v0.2.2 — Reference installs (owner)
+### v0.2.2 — Reference installs (owner) (current) (ACTIVE)
 **Goal:** Two real projects run one full iteration each through the pack with zero hand-edits of PLAN.md - moved from v0.2.0 on 2026-09-19 because both need the owner: a new project to stamp (name it) and RadEAU's retrofit registered in RadEAU's own plan from docs/audits/RadEAU-2026-09-19.md.
 - [ ] Owner names the new project; powerflow-init stamps it (interview, stamp, plan through powerplan, PRD conversation, first commit) [agent: claude-opus-5]
 - [ ] RadEAU retrofit: register docs/audits/RadEAU-2026-09-19.md as a 'PowerFlow retrofit' iteration in RadEAU's PLAN.md via powerplan; decide D<n> there on the XX-NNN ID scheme (keep or migrate) [agent: claude-opus-5]
