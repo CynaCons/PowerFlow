@@ -111,7 +111,9 @@ def check_versions() -> None:
 
 def check_guard_tests() -> None:
     import subprocess
-    r = subprocess.run(["npm", "test", "--silent"], cwd=ROOT, capture_output=True, text=True, shell=True)
+    # Same command as `npm test`, run directly: a list + shell=True drops the
+    # arguments on POSIX (CI ran a bare `npm` on 2026-09-19); node expands the glob itself.
+    r = subprocess.run(["node", "--test", "tests/guards/**/*.test.mjs"], cwd=ROOT, capture_output=True, text=True)
     passed = re.search(r"^# pass (\d+)", r.stdout, flags=re.M)
     failed = re.search(r"^# fail (\d+)", r.stdout, flags=re.M)
     print(f"guard tests: pass {passed.group(1) if passed else '?'} fail {failed.group(1) if failed else '?'}")
