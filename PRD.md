@@ -4,8 +4,8 @@
 methodology, codified once — a handbook, a template set and a `powerflow-*`
 skill plugin — so every project runs the same flow without re-specifying it.
 
-**Home:** `C:\dev\public-repo\PowerFlow` (GitHub: CynaCons/PowerFlow, to be
-published). Sibling of [powerplan](https://github.com/CynaCons/powerplan)
+**Home:** [github.com/CynaCons/PowerFlow](https://github.com/CynaCons/PowerFlow)
+(published 2026-09-19). Sibling of [powerplan](https://github.com/CynaCons/powerplan)
 (single writer of PLAN.md) and
 [PowerSpawn](https://github.com/CynaCons/PowerSpawn) (cross-model workers).
 

@@ -51,7 +51,7 @@ first, closed by the owner.
 ## Install
 
 ```bash
-claude plugin marketplace add C:\dev\public-repo\PowerFlow   # or the GitHub URL once published
+claude plugin marketplace add CynaCons/PowerFlow             # this repo is the marketplace
 claude plugin install powerflow@powerflow                    # user scope: every project, every session
 ```
 
