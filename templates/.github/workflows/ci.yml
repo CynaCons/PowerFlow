@@ -1,0 +1,39 @@
+# placeholders: typecheck_command, test_command
+# PowerFlow CI skeleton. The `guards` job is the methodology gate (D1, D2 and
+# the single-version-source rule); it needs only Node. Add the product's own
+# jobs below it — the two placeholder steps are the minimum.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  guards:
+    name: static guards (plan, requirement IDs, version)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: PLAN.md structure (mirrors powerplan check_plan)
+        run: node scripts/check-plan.mjs
+      - name: Requirement IDs unique, one tag per file
+        run: node scripts/check-req-ids.mjs
+      - name: Single version source
+        run: node scripts/check-version.mjs
+
+  build:
+    name: typecheck + unit tests
+    runs-on: ubuntu-latest
+    needs: guards
+    steps:
+      - uses: actions/checkout@v4
+      # add the toolchain setup for {{stack}} here (setup-node / setup-python / rust-toolchain / setup-dotnet)
+      - name: Typecheck
+        run: {{typecheck_command}}
+      - name: Unit tests
+        run: {{test_command}}

@@ -32,14 +32,14 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 
 ### v0.1.1 — Templates + powerflow-init (current) (ACTIVE)
 **Goal:** Every project artifact as a template with the D1–D11 decisions baked in, and the skill that stamps them into a new repo.
-- [ ] templates/PRD.md, PLAN.md (header per D2), AGENTS.md, CLAUDE.md shim, README.md
-- [ ] templates/docs/srs/README.md (index + prefix allocator, columns per D1) + SRS-template.md
-- [ ] templates/docs/decisions/README.md + D-template.md
-- [ ] templates/docs/agents/README.md (memories + context rules)
-- [ ] templates/.mcp.json (uvx and python -m variants), .claude/settings.local.json, .claude/launch.json
-- [ ] templates/.github/workflows/ci.yml guards job + scripts/check-req-ids.mjs, plan-normalize.mjs, check-version.mjs (from RadEAU / PowerGit)
-- [ ] skills/powerflow-init/SKILL.md — interview → stamp → create_plan → v0.1.0 standard tasks → smoke → first commit
-- [ ] Smoke test: stamp a throwaway repo; its guards run green; check_plan green
+- [x] templates/PRD.md, PLAN.md (header per D2), AGENTS.md, CLAUDE.md shim, README.md [agent: claude-opus-5]
+- [x] templates/docs/srs/README.md (index + prefix allocator, columns per D1) + SRS-template.md [agent: claude-opus-5]
+- [x] templates/docs/decisions/README.md + D-template.md [agent: claude-opus-5]
+- [x] templates/docs/agents/README.md (memories + context rules) [agent: claude-opus-5]
+- [x] templates/.mcp.json (uvx and python -m variants), .claude/settings.local.json, .claude/launch.json [agent: claude-opus-5]
+- [x] templates/.github/workflows/ci.yml guards job + scripts/check-req-ids.mjs, check-plan.mjs (lint mirror of check_plan, not PowerGit's one-off normalizer), check-version.mjs (from RadEAU / PowerGit) [agent: claude-opus-5]
+- [x] skills/powerflow-init/SKILL.md — interview → stamp → create_plan → v0.1.0 standard tasks → smoke → first commit [agent: claude-opus-5]
+- [x] Smoke test: stamp a throwaway repo; its guards run green; check_plan green [agent: claude-opus-5]
 
 ### v0.1.2 — Core loop skills
 **Goal:** The skills that run one iteration end to end: plan, slice, srs, verify, status.

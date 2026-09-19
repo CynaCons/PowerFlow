@@ -1,0 +1,16 @@
+# dependencies and build output
+node_modules/
+dist/
+target/
+__pycache__/
+*.pyc
+
+# agent runtime
+.claude/settings.local.json
+.claude/worktrees/
+IAC.md
+.powerspawn/
+
+# local
+*.log
+.env.local
