@@ -6,7 +6,8 @@ Stamp the PowerFlow templates into a project.
 Copies every file listed in TEMPLATES from PowerFlow/templates into the target,
 fills `{{placeholders}}` from the answers file, picks the .mcp.json variant
 that resolves on this machine, and refuses to leave a placeholder behind.
-Existing files are kept unless --force. PLAN.md is never written here: the
+Existing files are kept unless --force; the SRS/decisions indexes, PRD,
+AGENTS and README are kept even then unless --force-all. PLAN.md is never written here: the
 plan is created through powerplan so the single-writer rule holds from the
 first byte (PowerFlow D2, D11).
 
@@ -62,6 +63,9 @@ FILES = [
     ("scripts/check-version.mjs", "scripts/check-version.mjs"),
 ]
 EMPTY_DIRS = ["docs/agents/memories", "docs/agents/context"]
+# Files that carry project state once the project lives: --force never
+# overwrites them (a re-stamp wiped a live allocator table on 2026-09-19).
+STATEFUL = {"docs/srs/README.md", "docs/decisions/README.md", "PRD.md", "AGENTS.md", "README.md"}
 
 
 def _powerflow_plugin_installed() -> bool:
@@ -115,6 +119,7 @@ def main() -> None:
     ap.add_argument("--plugin", choices=["yes", "no", "auto"], default="auto",
                     help="is the powerflow Claude Code plugin installed on this machine? (D14)")
     ap.add_argument("--force", action="store_true", help="overwrite existing files")
+    ap.add_argument("--force-all", action="store_true", help="also overwrite stateful files (SRS/decisions indexes, PRD, AGENTS, README)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -148,8 +153,8 @@ def main() -> None:
         if not src.is_file():
             sys.exit(f"template missing: {src}")
         content = render(src.read_text(encoding="utf-8"), answers, src_rel)
-        if dst.exists() and not args.force:
-            kept.append(dst_rel)
+        if dst.exists() and (not args.force or (dst_rel in STATEFUL and not args.force_all)):
+            kept.append(dst_rel + (" [stateful: --force-all to overwrite]" if args.force and dst_rel in STATEFUL else ""))
             continue
         if not args.dry_run:
             dst.parent.mkdir(parents=True, exist_ok=True)

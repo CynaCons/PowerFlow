@@ -8,12 +8,13 @@
 //      table, against the same file, and every defined number is below the
 //      table's "Next free" for that tag
 //   4. E2E test numbers `NN-topic.spec.*` under tests/ are unique
-//   node scripts/check-req-ids.mjs
+//   node scripts/check-req-ids.mjs [--root <repo>]
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import { dirname, join, relative } from "node:path"
 import { fileURLToPath } from "node:url"
 
-const repo = join(dirname(fileURLToPath(import.meta.url)), "..")
+const rootArg = process.argv.indexOf("--root")
+const repo = rootArg >= 0 ? process.argv[rootArg + 1] : join(dirname(fileURLToPath(import.meta.url)), "..")
 const srsDir = join(repo, "docs", "srs")
 const ROW = /^\|\s*SRS-([A-Z][A-Z0-9]*)-(\d{3,})\s*\|/
 const failures = []

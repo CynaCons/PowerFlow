@@ -69,13 +69,13 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 ## v0.2 — Distribution
 > Plugin packaging, reference installs, consolidated guards.
 
-### v0.2.0 — Plugin packaging + two reference installs
+### v0.2.0 — Plugin packaging + two reference installs (2026-09-19) (COMPLETE)
 **Goal:** One user-level install puts every powerflow-* skill in every session; two real projects run one full iteration through the pack.
-- [ ] .claude-plugin/plugin.json + marketplace.json; install at user level
-- [ ] RadEAU audit fix list produced (docs/audits/RadEAU-2026-09-19.md, 10 findings, judgment pass noted); D7 pointers committed in powerplanner (f13df1d); PowerFlow self-stamped (.powerflow/init.json). Stamping a new project and the RadEAU retrofit itself moved to v0.2.2 (owner) [agent: claude-opus-5]
-- [ ] Smoke test: claude plugin validate green (manifest, marketplace, 13 skills); installed at user scope; details lists 13 skills; throwaway re-stamped with plugin detection (settings.local.json disables the project copy, D14) [agent: claude-opus-5]
+- [x] .claude-plugin/plugin.json + marketplace.json; install at user level [agent: claude-opus-5]
+- [x] RadEAU audit fix list produced (docs/audits/RadEAU-2026-09-19.md, 10 findings, judgment pass noted); D7 pointers committed in powerplanner (f13df1d); PowerFlow self-stamped (.powerflow/init.json). Stamping a new project and the RadEAU retrofit itself moved to v0.2.2 (owner) [agent: claude-opus-5]
+- [x] Smoke test: claude plugin validate green (manifest, marketplace, 13 skills); installed at user scope; details lists 13 skills; throwaway re-stamped with plugin detection (settings.local.json disables the project copy, D14) [agent: claude-opus-5]
 
-### v0.2.1 — Guards package
+### v0.2.1 — Guards package (current) (ACTIVE)
 **Goal:** check-req-ids, plan-normalize and check-version as one tested script set.
 - [ ] Consolidate the three guard scripts with tests; projects vendor or npx them
 - [ ] Tag v0.2; release notes from the closed iterations

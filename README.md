@@ -11,7 +11,7 @@ re-specifying it.
 | **Requirements** | [PRD.md](PRD.md) · decisions in [docs/decisions/](docs/decisions/README.md) |
 | **Plan** | [PLAN.md](PLAN.md) — operated by [powerplan](https://github.com/CynaCons/powerplan) |
 | **Pairs with** | [powerplan](https://github.com/CynaCons/powerplan) (PLAN.md single writer) · [PowerSpawn](https://github.com/CynaCons/PowerSpawn) (workers) |
-| **Status** | v0.1.0 — definition (see PLAN.md) |
+| **Status** | 0.2.0 — installable; reference installs pending (PLAN.md v0.2.2) |
 
 ## What it is
 
@@ -50,8 +50,15 @@ first, closed by the owner.
 
 ## Install
 
-Not yet packaged (v0.2.0). Until then the handbook and templates are usable
-by reading; the skills land in v0.1.2–v0.1.4.
+```bash
+claude plugin marketplace add C:\dev\public-repo\PowerFlow   # or the GitHub URL once published
+claude plugin install powerflow@powerflow                    # user scope: every project, every session
+```
+
+The plugin also registers the `powerplan` MCP server (`python -m powerplan`,
+needs `pip install powerplan-mcp`) so `show_miniplan` works in every session
+(D14). Then in a new or existing repo: `/powerflow-init` — or just say "start a
+new project". `claude plugin details powerflow@powerflow` lists the 13 skills.
 
 ## Origin
 

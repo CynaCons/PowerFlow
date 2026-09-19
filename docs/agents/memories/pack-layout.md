@@ -17,3 +17,17 @@ Status paragraph (see `skills/powerflow-init/references/first-iteration.md`).
 `{{e2e_command}}` — the placeholder regex is `[a-z0-9_]+`; a `[a-z_]+`
 version silently left it in AGENTS.md and the leftover check (same regex)
 could not see it. Keep the two using one compiled pattern.
+
+## The plugin bundles root .mcp.json; the stamp protects stateful files
+`claude plugin details` lists `MCP servers (1) powerplan` because the loader
+scans the plugin root's `.mcp.json`; `"mcpServers": {}` in plugin.json does not
+opt out (tested 2026-09-19). Decision D14 keeps it. `stamp.py --force` keeps
+PRD/AGENTS/README and the SRS/decisions indexes (`STATEFUL`) — a re-stamp once
+wiped a live allocator table; `--force-all` is the explicit override.
+
+## Guards take --root; PowerFlow's own CI runs the Node mirror on its plan
+`check-req-ids.mjs --root <dir>` / `check-version.mjs --root <dir>` (2026-09-19)
+let `tests/guards/guards.test.mjs` drive them against temp fixtures. CI runs
+`node templates/scripts/check-plan.mjs PLAN.md` beside `check.py` so a
+disagreement between the mirror and powerplan's `check_plan` shows up here first
+(D13 reopen gate).

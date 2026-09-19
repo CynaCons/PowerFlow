@@ -3,7 +3,7 @@
 // Single-version-source guard (PowerFlow METHODOLOGY.md §8). Exactly one file
 // carries the version; everything else derives from it or is checked here to
 // match. Exit 1 on any drift.
-//   node scripts/check-version.mjs [--tag vX.Y.Z] [--changelog]
+//   node scripts/check-version.mjs [--tag vX.Y.Z] [--changelog] [--root <repo>]
 // Fill DERIVED with every other place the version appears verbatim (manifest
 // copies, server.json, a packaging test). A file that derives at build time
 // (tauri.conf.json pointing at ../package.json, a build.rs export) belongs in
@@ -12,7 +12,8 @@ import { existsSync, readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
-const repo = join(dirname(fileURLToPath(import.meta.url)), "..")
+const rootArg = process.argv.indexOf("--root")
+const repo = rootArg >= 0 ? process.argv[rootArg + 1] : join(dirname(fileURLToPath(import.meta.url)), "..")
 
 // The only file that carries the version.
 const SOURCE = "{{version_source}}"

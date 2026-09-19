@@ -20,16 +20,20 @@ docs/agents/          memories and context (living)
 docs/proposal-*.html  the archived analysis this repo started from
 templates/            files powerflow-init stamps into a project
 skills/powerflow-*/   SKILL.md per movement of the loop
-scripts/              plan_bootstrap.py (provenance only) · check.py (verify)
-.claude-plugin/       plugin manifest (v0.2.0)
+scripts/              plan_bootstrap.py (provenance only) · check.py (verify) · check-req-ids.mjs
+tests/guards/         node --test cases for the three vendored guards
+.claude-plugin/       plugin.json (the version source) + marketplace.json
+docs/audits/          audit fix lists for other repos (input to their retrofits)
 ```
 
 ## Commands
 
 ```bash
-python -m powerplan                 # the MCP server (stdio); registered in .mcp.json
-python scripts/check.py             # verify: check_plan + decision/skill index consistency
-python -m pytest -q                 # once skills have fixture tests (v0.1.1+)
+python -m powerplan                 # the MCP server (stdio); registered in .mcp.json (also the plugin's, D14)
+python scripts/check.py             # verify: check_plan, decisions, req-ids, skills, versions, guard tests
+npm test                            # the 17 guard tests alone (node --test)
+node templates/scripts/check-plan.mjs PLAN.md   # the Node mirror against our own plan (D13 gate)
+claude plugin validate .            # manifests + skills
 ```
 
 ## How we verify

@@ -9,6 +9,8 @@ Checks, exit 1 on any failure:
      or is still an open PLAN task (reported as pending, not as a failure).
   4. Every decision file has Status / Context / Decision / Consequences.
   5. scripts/check-req-ids.mjs (the stamped guard) passes on docs/srs/.
+  6. plugin.json, package.json and the CHANGELOG top section agree on the version.
+  7. The guard tests (npm test) pass.
 """
 
 from __future__ import annotations
@@ -94,11 +96,36 @@ def check_req_ids() -> None:
         FAIL.append("check-req-ids.mjs: " + (r.stderr.strip() or r.stdout.strip()))
 
 
+def check_versions() -> None:
+    import json
+    plugin = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")).get("version")
+    pkg = json.loads((ROOT / "package.json").read_text(encoding="utf-8")).get("version")
+    cl = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8") if (ROOT / "CHANGELOG.md").is_file() else ""
+    top = re.search(r"^## (\d+\.\d+\.\d+)", cl, flags=re.M)
+    if pkg != plugin:
+        FAIL.append(f"package.json version {pkg} != .claude-plugin/plugin.json version {plugin} (plugin.json is the source)")
+    if not top or top.group(1) != plugin:
+        FAIL.append(f"CHANGELOG.md top section is {top.group(1) if top else 'missing'}, plugin.json says {plugin}")
+    print(f"versions: plugin {plugin} · package.json {pkg} · changelog {top.group(1) if top else '—'}")
+
+
+def check_guard_tests() -> None:
+    import subprocess
+    r = subprocess.run(["npm", "test", "--silent"], cwd=ROOT, capture_output=True, text=True, shell=True)
+    passed = re.search(r"^# pass (\d+)", r.stdout, flags=re.M)
+    failed = re.search(r"^# fail (\d+)", r.stdout, flags=re.M)
+    print(f"guard tests: pass {passed.group(1) if passed else '?'} fail {failed.group(1) if failed else '?'}")
+    if r.returncode != 0 or (failed and failed.group(1) != "0"):
+        FAIL.append("guard tests failed (npm test)")
+
+
 def main() -> int:
     check_plan()
     check_decisions()
     check_req_ids()
     check_skills()
+    check_versions()
+    check_guard_tests()
     for line in PEND:
         print(f"pending  {line}")
     for line in FAIL:
