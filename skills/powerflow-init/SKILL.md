@@ -58,8 +58,11 @@ It copies PRD, AGENTS, CLAUDE shim, README, .gitignore, the SRS/decisions/agents
 READMEs, `.claude/settings.local.json` (+ `launch.json` when a port was
 given), the CI workflow and the three guard scripts, fills every placeholder,
 and picks `.mcp.json` for `uvx powerplan-mcp` or `python -m powerplan`
-depending on what resolves (D4). It keeps existing files (`--force` to
-overwrite) and never writes PLAN.md. If it exits non-zero, read the message:
+depending on what resolves (D4). When the `powerflow` plugin is installed on
+this machine it writes `settings.local.json` with the project's powerplan
+**disabled** — the plugin already provides it, and two copies would load
+(D14); `--plugin yes|no` overrides the detection. It keeps existing files
+(`--force` to overwrite) and never writes PLAN.md. If it exits non-zero, read the message:
 it names the missing answer or the leftover placeholder.
 
 ## 3. Register the MCP, then make sure it is live

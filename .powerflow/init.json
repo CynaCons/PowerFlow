@@ -1,0 +1,7 @@
+{
+  "powerflow": "0.2.0",
+  "stamped": "2026-09-19",
+  "mcp": "python",
+  "plugin": "yes",
+  "note": "PowerFlow predates its own stamp; this file records that the repo is the pack itself (self-hosted). Templates are the source; nothing was copied."
+}

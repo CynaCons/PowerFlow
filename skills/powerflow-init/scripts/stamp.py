@@ -56,13 +56,21 @@ FILES = [
     ("docs/srs/README.md", "docs/srs/README.md"),
     ("docs/decisions/README.md", "docs/decisions/README.md"),
     ("docs/agents/README.md", "docs/agents/README.md"),
-    (".claude/settings.local.json", ".claude/settings.local.json"),
     (".github/workflows/ci.yml", ".github/workflows/ci.yml"),
     ("scripts/check-plan.mjs", "scripts/check-plan.mjs"),
     ("scripts/check-req-ids.mjs", "scripts/check-req-ids.mjs"),
     ("scripts/check-version.mjs", "scripts/check-version.mjs"),
 ]
 EMPTY_DIRS = ["docs/agents/memories", "docs/agents/context"]
+
+
+def _powerflow_plugin_installed() -> bool:
+    """True when Claude Code has the powerflow plugin at user scope (D14)."""
+    reg = Path.home() / ".claude" / "plugins" / "installed_plugins.json"
+    try:
+        return "powerflow" in json.loads(reg.read_text(encoding="utf-8")).get("plugins", {}) or                '"powerflow@' in reg.read_text(encoding="utf-8")
+    except (OSError, json.JSONDecodeError):
+        return False
 
 
 def load_answers(path: Path) -> dict:
@@ -104,6 +112,8 @@ def main() -> None:
     ap.add_argument("--target", required=True, type=Path)
     ap.add_argument("--answers", required=True, type=Path)
     ap.add_argument("--mcp", choices=["uvx", "python", "auto"], default="auto")
+    ap.add_argument("--plugin", choices=["yes", "no", "auto"], default="auto",
+                    help="is the powerflow Claude Code plugin installed on this machine? (D14)")
     ap.add_argument("--force", action="store_true", help="overwrite existing files")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -120,6 +130,14 @@ def main() -> None:
     if mcp == "auto":
         mcp = "uvx" if shutil.which("uvx") else "python"
     files.append((".mcp.json" if mcp == "uvx" else ".mcp.python.json", ".mcp.json"))
+    # D14: when the powerflow plugin is installed, Claude Code already loads
+    # powerplan from the plugin; disable the project copy locally (git-ignored)
+    # so the server is not loaded twice. Clones without the plugin enable it.
+    plugin = args.plugin
+    if plugin == "auto":
+        plugin = "yes" if _powerflow_plugin_installed() else "no"
+    files.append((".claude/settings.local.plugin.json" if plugin == "yes" else ".claude/settings.local.json",
+                  ".claude/settings.local.json"))
     if answers.get("dev_port"):
         files.append((".claude/launch.json", ".claude/launch.json"))
 
@@ -145,13 +163,14 @@ def main() -> None:
 
     # Provenance for powerflow-audit: what was stamped, from which pack version.
     pack_version = "unknown"
-    plugin = PACK_ROOT / ".claude-plugin" / "plugin.json"
-    if plugin.is_file():
-        pack_version = json.loads(plugin.read_text(encoding="utf-8")).get("version", pack_version)
+    manifest = PACK_ROOT / ".claude-plugin" / "plugin.json"
+    if manifest.is_file():
+        pack_version = json.loads(manifest.read_text(encoding="utf-8")).get("version", pack_version)
     stamp = {
         "powerflow": pack_version,
         "stamped": date.today().isoformat(),
         "mcp": mcp,
+        "plugin": plugin,
         "answers": {k: answers[k] for k in REQUIRED + list(DEFAULTS) + ["date", "dev_port"] if k in answers},
         "files": written,
     }
@@ -160,7 +179,7 @@ def main() -> None:
         (target / ".powerflow" / "init.json").write_text(json.dumps(stamp, indent=2) + "\n", encoding="utf-8")
 
     verb = "would write" if args.dry_run else "wrote"
-    print(f"stamp: {verb} {len(written)} file(s) into {target} (mcp: {mcp})")
+    print(f"stamp: {verb} {len(written)} file(s) into {target} (mcp: {mcp}, plugin: {plugin})")
     for f in written:
         print(f"  + {f}")
     for f in kept:

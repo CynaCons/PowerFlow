@@ -61,6 +61,10 @@ task says so, and never commit or push.
 
 ## Engineering rules
 
+- `.mcp.json` at this root is a **plugin surface** (D14): the installed
+  `powerflow` plugin serves it as powerplan's registration in every Claude Code
+  session on the machine. Change its command only with a decision.
+
 - One canonical text: if a rule is in METHODOLOGY.md, link it — do not
   paraphrase it into a skill or template.
 - Skills are procedures: steps, gate, report. Project-specific commands are

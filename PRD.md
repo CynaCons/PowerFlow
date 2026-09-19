@@ -154,6 +154,7 @@ re-specification cost, and every agent session pays it again in context.
 | D11 | Session bookends | PLAN.md first (`show_miniplan`) and last (status update via powerplan) in every working session |
 | D12 | Turn-end miniplan | Every major turn ends with the miniplan displayed verbatim, so the owner returning to the console sees state at a glance |
 | D13 | Guards are Node scripts mirroring powerplan | CI guards are vendored .mjs files needing only Node; check-plan mirrors powerplan's check_plan, which stays the authority |
+| D14 | The plugin bundles the powerplan MCP registration | Claude Code loads powerplan from the plugin in every session; stamped .mcp.json stays for clones without it and powerflow-init disables the project copy locally to avoid a duplicate server |
 
 ## 10. Success criteria
 

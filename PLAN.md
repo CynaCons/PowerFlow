@@ -60,11 +60,11 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] Smoke test: powerflow-release dry run against PowerGit reproduces its release skill's step list [agent: claude-opus-5]
 - [x] D12 turn-end miniplan (owner 2026-09-19: 'at the end of each major turn, show me the miniplan'): decision file + PRD table, METHODOLOGY.md section 3, AGENTS.md template + PowerFlow AGENTS.md, powerflow-plan / powerflow-verify report shapes end with the miniplan, one line in the owner's global CLAUDE.md [agent: claude-opus-5]
 
-### v0.1.4 — Orchestration + audit (current) (ACTIVE)
+### v0.1.4 — Orchestration + audit (2026-09-19) (COMPLETE)
 **Goal:** coordinate over powerspawn, and audit a repo against the pack.
-- [ ] skills/powerflow-coordinate — loop over the active iteration via powerspawn; dispatch contract; verify the gate yourself; serial by default, parallel only on disjoint paths
-- [ ] skills/powerflow-audit — drift report (missing artifacts, header style, SRS scheme, shim, memories, guards, unverified requirements) emitted as PLAN tasks
-- [ ] Smoke test: audit PowerGit and RadEAU; the drift table from the proposal is reproduced
+- [x] skills/powerflow-coordinate — loop over the active iteration via powerspawn; dispatch contract; verify the gate yourself; serial by default, parallel only on disjoint paths [agent: claude-opus-5]
+- [x] skills/powerflow-audit — drift report (missing artifacts, header style, SRS scheme, shim, memories, guards, unverified requirements) emitted as PLAN tasks [agent: claude-opus-5]
+- [x] Smoke test: audit PowerGit and RadEAU; the drift table from the proposal is reproduced [agent: claude-opus-5]
 
 ## v0.2 — Distribution
 > Plugin packaging, reference installs, consolidated guards.
@@ -72,13 +72,20 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 ### v0.2.0 — Plugin packaging + two reference installs
 **Goal:** One user-level install puts every powerflow-* skill in every session; two real projects run one full iteration through the pack.
 - [ ] .claude-plugin/plugin.json + marketplace.json; install at user level
-- [ ] Stamp one new project with powerflow-init; retrofit RadEAU with powerflow-audit's fix list
-- [ ] Smoke test: one full iteration in each project with zero hand-edits of PLAN.md
+- [ ] RadEAU audit fix list produced (docs/audits/RadEAU-2026-09-19.md, 10 findings, judgment pass noted); D7 pointers committed in powerplanner (f13df1d); PowerFlow self-stamped (.powerflow/init.json). Stamping a new project and the RadEAU retrofit itself moved to v0.2.2 (owner) [agent: claude-opus-5]
+- [ ] Smoke test: claude plugin validate green (manifest, marketplace, 13 skills); installed at user scope; details lists 13 skills; throwaway re-stamped with plugin detection (settings.local.json disables the project copy, D14) [agent: claude-opus-5]
 
 ### v0.2.1 — Guards package
 **Goal:** check-req-ids, plan-normalize and check-version as one tested script set.
 - [ ] Consolidate the three guard scripts with tests; projects vendor or npx them
 - [ ] Tag v0.2; release notes from the closed iterations
+
+### v0.2.2 — Reference installs (owner)
+**Goal:** Two real projects run one full iteration each through the pack with zero hand-edits of PLAN.md - moved from v0.2.0 on 2026-09-19 because both need the owner: a new project to stamp (name it) and RadEAU's retrofit registered in RadEAU's own plan from docs/audits/RadEAU-2026-09-19.md.
+- [ ] Owner names the new project; powerflow-init stamps it (interview, stamp, plan through powerplan, PRD conversation, first commit) [agent: claude-opus-5]
+- [ ] RadEAU retrofit: register docs/audits/RadEAU-2026-09-19.md as a 'PowerFlow retrofit' iteration in RadEAU's PLAN.md via powerplan; decide D<n> there on the XX-NNN ID scheme (keep or migrate) [agent: claude-opus-5]
+- [ ] Run one full iteration in each project using only powerflow-* skills; no hand-edit of either PLAN.md [agent: claude-opus-5]
+- [ ] Smoke test: powerflow-audit reports 0 findings on both projects; their guards are green in CI [agent: claude-opus-5]
 
 ## Backlog
 - autosar-101-training: fold embedded close-the-loop guidance (SIL, debugger, CAN/XCP, datasheets, SDK references) into powerflow-verify once the repo is located (D9)

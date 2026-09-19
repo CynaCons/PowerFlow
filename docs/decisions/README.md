@@ -18,3 +18,4 @@ name the gate that would reopen the decision. IDs are never reused.
 - [D11 — Session bookends](D11-session-bookends.md) — PLAN.md first (`show_miniplan`) and last (status update).
 - [D12 — Turn-end miniplan](D12-turn-end-miniplan.md) — every major turn ends with the miniplan displayed verbatim.
 - [D13 — Guards are Node scripts mirroring powerplan](D13-guards-in-node.md) — CI guards are vendored .mjs files needing only Node; check-plan mirrors powerplan's check_plan, which stays the authority
+- [D14 — The plugin bundles the powerplan MCP registration](D14-plugin-bundles-powerplan.md) — Claude Code loads powerplan from the plugin in every session; stamped .mcp.json stays for clones without it and powerflow-init disables the project copy locally to avoid a duplicate server

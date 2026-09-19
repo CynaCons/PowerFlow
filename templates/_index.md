@@ -21,7 +21,8 @@ answers and refuses to leave any behind.
 | `docs/agents/README.md` | same | project |
 | `.mcp.json` | `.mcp.json` when `uvx` resolves | — |
 | `.mcp.python.json` | `.mcp.json` when it does not | — |
-| `.claude/settings.local.json` | same (git-ignored) | — |
+| `.claude/settings.local.json` | same (git-ignored) when the powerflow plugin is **not** installed — enables the project's powerplan | — |
+| `.claude/settings.local.plugin.json` | `.claude/settings.local.json` when the plugin **is** installed — disables the project copy so powerplan is not loaded twice (D14) | — |
 | `.claude/launch.json` | same | dev_command_exe, dev_command_args, dev_port |
 | `.github/workflows/ci.yml` | same | typecheck_command, test_command, stack |
 | `scripts/check-req-ids.mjs` | same | — |

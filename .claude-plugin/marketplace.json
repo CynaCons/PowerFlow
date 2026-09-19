@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "powerflow",
+  "description": "PowerFlow — the methodology pack (handbook, templates, powerflow-* skills).",
+  "owner": {
+    "name": "Constantin Chabirand (CynaCons)"
+  },
+  "plugins": [
+    {
+      "name": "powerflow",
+      "description": "Thirteen powerflow-* skills that run the PRD -> SRS -> PLAN -> verify -> release loop with powerplan and PowerSpawn.",
+      "category": "productivity",
+      "source": "./"
+    }
+  ]
+}
