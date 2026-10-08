@@ -26,7 +26,7 @@ the coordinator session that operates the plan and the workers; the workers
    files link to it. If it passes ~300 lines, split by *procedure*, never by rule.
 2. **powerplan and PowerSpawn are the load-bearing parts.** Everything else is
    rules around them; the PowerSpawn section evolves with the tool.
-3. **PLAN.md first and last, miniplan every major turn** (D11, D12).
+3. **PLAN.md first and last, status view every major turn** (D11, D12, D16).
 4. **PRD once** (D10). Routine change is a decision, an SRS row or a task.
 5. **Evidence or it didn't happen.** Ticks carry proof; owner reports are closed
    by the owner.

@@ -97,6 +97,11 @@ a version, so it cannot go stale. Verify: `python scripts/check.py` (plan lint
 - [x] Smoke test: claude plugin validate green and details lists exactly 1 skill (~285 tokens always-on); lean throwaway stamped with 7 files + plan via powerplan, no placeholders; audit.py on PowerFlow: 1 low (no SRS files yet — by design); plugin updated to 0.3.0; pushed + tagged v0.3.0 + GitHub release [agent: claude-opus-5]
 - [x] GitHub Pages site for PowerFlow (owner request 2026-09-19): one static page (the loop, the ten rules, install, links to the skill and the repo), deployed by a pages workflow; Pages enabled on the repo; link handed to the owner [agent: claude-opus-5]
 
+### v0.3.1 — Status view at the end of every turn (2026-10-08) (current) (ACTIVE)
+**Goal:** D16: the turn-end block is show_current_iteration's status view (owner: "I want all my agents doing that"); skill, AGENTS.md, template, README, PRD updated; powerplan 0.9.0 carries the rule in its MCP instructions.
+- [x] D16 appended (D12 annotated); SKILL.md D12 bullet + loop/report lines, AGENTS.md, templates/AGENTS.md, README rule 3, PRD rule 3 say show_current_iteration verbatim in a code block
+- [ ] Version 0.3.1 in plugin.json, package.json, CHANGELOG; commit + push; refresh the installed plugin
+
 ## Backlog
 - autosar-101-training: fold embedded close-the-loop guidance (SIL, debugger, CAN/XCP, datasheets, SDK references) into powerflow-verify once the repo is located (D9)
 - Bidirectional test ↔ requirement map generator for docs/srs/README.md

@@ -18,8 +18,8 @@ claude plugin marketplace update powerflow && claude plugin uninstall powerflow@
 ## The plan
 
 `PLAN.md` is written only through powerplan. `show_miniplan` first; register
-work before doing it; tick with evidence; show the miniplan at the end of every
-major turn; `check_plan` before reporting.
+work before doing it; tick with evidence; end every major turn with
+`show_current_iteration` verbatim in a code block; `check_plan` before reporting.
 
 ## Rules for this repo
 
@@ -40,4 +40,4 @@ major turn; `check_plan` before reporting.
 ## Reporting
 
 What changed · how verified (command → result) · what is open · memories. Then
-the miniplan.
+the status view (`show_current_iteration`).

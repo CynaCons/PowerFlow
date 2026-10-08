@@ -22,7 +22,8 @@ Read [PRD.md](PRD.md) before inventing product behaviour.
 
 `PLAN.md` is written only through the **powerplan** tools. Open every session
 with `show_miniplan`; register new work before doing it; tick only with
-evidence; end every major turn by showing the miniplan. Requirements are rows
+evidence; end every major turn with `show_current_iteration` pasted verbatim
+in a code block. Requirements are rows
 in `docs/srs/SRS-<feature>.md` (`SRS-<FEAT>-NNN`, never reused), written before
 the code that satisfies them.
 
@@ -45,4 +46,4 @@ commit or push.
 ## Reporting
 
 What changed (paths) · how it was verified (commands, exit codes, counts) ·
-what is open · memories written. Then the miniplan.
+what is open · memories written. Then the status view (`show_current_iteration`).

@@ -15,8 +15,8 @@ Site: **https://cynacons.github.io/PowerFlow/** · The method:
    declared change of direction.
 2. **PLAN.md is the backbone**, written only by powerplan: iterations,
    checkboxes, smoke task last, a header that cannot go stale.
-3. **Miniplan first, last, and at the end of every major turn** — the console
-   shows the state when you come back.
+3. **Miniplan first; the status view (`show_current_iteration`) at the end of every
+   major turn** — the console shows the state when you come back.
 4. **Register work before doing it**; tick only with evidence.
 5. **SRS rows before code**: `SRS-<FEAT>-NNN`, one shall per row, never reused.
 6. **Close the loop before "done"**: tests once, the app launches clean, look

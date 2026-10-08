@@ -71,6 +71,7 @@ through powerplan (`check_plan` green). `show_miniplan` was added to powerplan
 I come and check the console." A turn that changed files, ticked tasks, ran a
 gate or closed an iteration ends with the raw `show_miniplan` block. Also one
 line in the owner's global CLAUDE.md. Reopen if it reads as noise.
+*Amended by D16: the turn-end block is now the status view.*
 
 ## D13 — Guards are Node scripts mirroring powerplan · 2026-09-19
 `check-plan.mjs` lints what `check_plan` lints (powerplan stays the authority
@@ -105,3 +106,13 @@ opt-in. Decisions become this log; SRS keeps the rule and loses the allocator
 machinery. PowerFlow's own PRD is trimmed to a page and this is its direction
 change (D10). Reopen if the one skill passes ~300 lines — then split by
 *procedure* (something with a script), never by rule.
+
+## D16 — The turn-end block is the status view · 2026-10-08 (owner)
+Owner, on the block printed at the end of each turn: "This type of plan... it's great.
+I want all my agents doing that." The block they meant is `show_current_iteration`'s
+status view (status, progress count, goal, tasks), not the raw `show_miniplan`
+text. Every major turn (D12's trigger) ends with `show_current_iteration` pasted
+verbatim in a code block. `show_miniplan` stays the session opener (D11).
+powerplan 0.9.0 sends this rule in its MCP instructions, so every client that
+connects to powerplan (Claude Code, Codex, Cursor) receives it without this
+skill. Reopen if the owner wants the raw text back.

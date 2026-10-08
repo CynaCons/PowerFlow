@@ -1,6 +1,6 @@
 ---
 name: powerflow
-description: The PowerFlow way of building software with agents — start a project (PRD once, PLAN.md through powerplan, a short AGENTS.md), run every session and turn on the plan (show_miniplan first, status update last, miniplan at the end of each major turn), write SRS rows before code, close the loop before saying "done", handle owner-reported bugs failing-test-first, spawn and supervise PowerSpawn workers with a full brief, keep memories, cut releases, and audit a repo for drift. Use this whenever the user starts a new project, says "powerflow", "start a slice", "what's next", "verify", "bug:", "release", "spawn workers / use Codex / Copilot / Grok for this", "how do we work here", or opens a repo that has a PLAN.md — the plan is the session's memory and this skill is how it is operated.
+description: The PowerFlow way of building software with agents — start a project (PRD once, PLAN.md through powerplan, a short AGENTS.md), run every session and turn on the plan (show_miniplan first, status update last, the status view from show_current_iteration at the end of each major turn), write SRS rows before code, close the loop before saying "done", handle owner-reported bugs failing-test-first, spawn and supervise PowerSpawn workers with a full brief, keep memories, cut releases, and audit a repo for drift. Use this whenever the user starts a new project, says "powerflow", "start a slice", "what's next", "verify", "bug:", "release", "spawn workers / use Codex / Copilot / Grok for this", "how do we work here", or opens a repo that has a PLAN.md — the plan is the session's memory and this skill is how it is operated.
 ---
 
 # PowerFlow
@@ -69,10 +69,11 @@ The rules around the tools:
   ticks with evidence, discovered work registered, `check_plan` green, then
   the report. The conversation is not state; after a compaction the plan is
   where work resumes.
-- **Miniplan at the end of every major turn (D12).** A turn that changed
-  files, ticked or added tasks, ran a gate or closed an iteration ends with
-  the raw `show_miniplan` block, after the report, before any question. The
-  owner switches contexts and reads the console cold.
+- **Status view at the end of every major turn (D12, D16).** A turn that
+  changed files, ticked or added tasks, ran a gate or closed an iteration
+  ends with `show_current_iteration` pasted verbatim in a code block, after
+  the report, before any question. The owner switches contexts and reads
+  the console cold. (powerplan >= 0.9.0 also sends this rule to every client.)
 - **Register before doing.** Owner feedback, a bug, a discovery, a follow-up
   you would "just do" — it becomes a task (`add_tasks`), an iteration, or a
   backlog item first. This is what keeps "what is open" true.
@@ -136,7 +137,7 @@ Where layers compose and the DOM cannot see the result, assert composited
 pixels; "feels laggy" is measured in-page. `showcase: required` (D8) means the
 iteration closes only with screenshots from the running app. Then fill SRS
 Trace for rows a test now verifies, tick with the evidence lines, close the
-iteration if everything has proof, and end with the miniplan.
+iteration if everything has proof, and end with the status view.
 
 ## 6. Owner reports
 
@@ -191,7 +192,7 @@ gate → dispatch (serial by default; parallel only on provably disjoint paths)
 **validate yourself**: `git status` shows only allowed paths changed, run the
 gate, require the pass signal, run the smoke if runtime changed → **commit
 before tick** (`feat(scope): … [worker: <provider> <id>]`, then
-`complete_task … agent=<id>`) → memory if a landmine surfaced → miniplan.
+`complete_task … agent=<id>`) → memory if a landmine surfaced → status view.
 Three failed attempts → `defer_task` with the reason; move on. Stop cleanly
 when all tasks are proven (close the iteration) or nothing is ready (report the
 blocked set) — never spin. Report as a table: task · worker · gate · result.
@@ -248,4 +249,4 @@ closes when the audit prints `findings: 0`.
 ## Reports
 
 Evidence lines, not narrative: command → exit code / count / path. Workers as
-a table. Then the miniplan.
+a table. Then the status view.

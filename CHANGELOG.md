@@ -3,6 +3,14 @@
 Release notes are the closed iterations of [PLAN.md](PLAN.md). The version is
 `.claude-plugin/plugin.json`; `package.json` and this file's top section match.
 
+## 0.3.1 — 2026-10-08
+
+**Status view at the end of every turn** (D16). Owner: "I want all my agents
+doing that." The block that closes each major turn is now `show_current_iteration`
+(status, progress count, goal, tasks) pasted verbatim in a code block;
+`show_miniplan` stays the session opener. powerplan 0.9.0 sends the same rule in
+its MCP instructions, so Codex and Cursor agents get it too.
+
 ## 0.3.0 — 2026-09-19
 
 **Lean** (D15). Owner: "way too complicated… strip the fat, keep the

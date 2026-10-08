@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "powerflow",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The PowerFlow method as one skill: PRD once, PLAN.md through powerplan (miniplan first, last and per turn), SRS rows before code, close the loop before done, bugs failing-test-first, PowerSpawn workers with a full brief, memories, release, audit.",
   "author": {
     "name": "Constantin Chabirand (CynaCons)",
